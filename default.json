@@ -1,0 +1,53 @@
+{
+  "/fftPosX": {
+    "min": 0,
+    "max": 320,
+    "value": 0
+  },
+  "/sizeCircle": {
+    "min": 10,
+    "max": 100,
+    "value": 44.20000076293945
+  },
+  "/fftPosY": {
+    "min": 0,
+    "max": -324,
+    "value": -165.239990234375
+  },
+  "/thresholdMinimInteractionFFT": {
+    "min": 9.99999993922529E-9,
+    "max": 0.10000000149011612,
+    "value": 0.013000008650124073
+  },
+  "/gapX": {
+    "min": 0,
+    "max": 100,
+    "value": 10
+  },
+  "/scaleRectH": {
+    "min": 1,
+    "max": 100,
+    "value": 3
+  },
+  "/modeDrawing": {
+    "min": 1,
+    "max": 2,
+    "value": 2
+  },
+  "/bandsThreshold": {
+    "min": 0,
+    "max": 512,
+    "value": 51
+  },
+  "/rectW": {
+    "min": 1,
+    "max": 10,
+    "value": 3
+  },
+  "/strokeWeigthCircle": {
+    "min": 1,
+    "max": 100,
+    "value": 2
+  },
+  "/bSumMode": {"value": 0}
+}
