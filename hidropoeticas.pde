@@ -1,20 +1,28 @@
-/** //<>//
-  Hidropoeticas
-  by Carles Gutierrez
-  Toolset createt for Santiago Morilla. 
-  IT use the FFT class to analyze a stream of sound.
-  Find higest dominant Freq and share sound visualizer with spout. 
+/** //<>// //<>// //<>//
+ Hidropoeticas
+ by Carles Gutierrez
+ Toolset createt for Santiago Morilla.
+ It use the FFT class to analyze a stream of sound.
+ Find higest dominant Freq and share sound visualizer with spout.
  */
 
 import processing.sound.*;
 import spout.*;
 import controlP5.*;
+import oscP5.*;
+import netP5.*;
+
+
 
 // Declare the sound source and FFT analyzer variables
 AudioIn in;
 SoundFile sample;
 FFT fft;
 ControlP5 cp5;
+
+//OSC vars
+OscP5 oscP5;
+NetAddress myRemoteLocation;
 
 // Define how many FFT bands to use (this needs to be a power of two)
 int bands = 512;//128;
@@ -42,12 +50,15 @@ public int fftPosX, fftPosY = 0;
 public float thresholdMinimInteractionFFT = 0.0003;
 public boolean bSumMode = false;
 public int bandsThreshold = 51;//300;
-public int strokeWeigthCircle = 2;
+
 public int sizeCircle = 100;
 //Colors
 public int cBackground = color(0, 0, 0);
 public int cBars = color(255, 255, 255);
+public int lineWidth = 10;//TODO line mode more thought
 
+//Sound vars
+float scaleX = 1;
 
 // DECLARE A SPOUT OBJECT
 Spout spout;
@@ -100,19 +111,19 @@ public void createCUSTOMGUI(int _x, int _y) {
     ;
 
   // add a vertical slider
-  cp5.addSlider("strokeWeigthCircle")
+  cp5.addSlider("lineWidth")
     .setPosition(_x + 170, _y+80)
     .setSize(100, 10)
-    .setRange(1, 100)
+    .setRange(1, 20)
     ;
-    
-    // add a vertical slider
+
+  // add a vertical slider
   cp5.addSlider("thresholdMinimInteractionFFT")
     .setPosition(_x + 400, _y+80)
     .setSize(100, 10)
     .setRange(0.00000001, 0.1)
     ;
-   
+
 
 
   // add a vertical slider
@@ -155,8 +166,21 @@ public void createCUSTOMGUI(int _x, int _y) {
   cp5.addButton("b4", 0, 281, 350, 80, 12).setCaptionLabel("load default").setColorBackground(color(0, 100, 50));
 }
 
+public void setupDimensionsSoundBar() {
+  scaleX = width/bands;
+  println("scaleX = "+scaleX);
+}
+
 public void setup() {
-  size(640, 360, P3D);
+
+  size(1920, 1080, P3D); //640, 360
+  // Pulling the display's density dynamically
+  pixelDensity(displayDensity());
+  
+  setupDimensionsSoundBar();
+  
+  //surface.setLocation(-width, 0);
+  
   textureMode(NORMAL);
   background(255);
 
@@ -168,7 +192,8 @@ public void setup() {
 
 
   //AUDIO
-  in = new AudioIn(this, 1);
+  Sound.list();
+  in = new AudioIn(this, 0);
   // start the Audio Input
   in.start();
 
@@ -182,13 +207,19 @@ public void setup() {
   spout.setSenderName("Spout Processing Sender");
 
   //LOAD SAVED GUI
-  cp5.loadProperties(("default.json"));
+  cp5.loadProperties(("default.json"));//Take care and release at the end of GUI DESIGN
+
+  //OSC
+  oscP5 = new OscP5(this, 7001);
+  myRemoteLocation = new NetAddress("127.0.0.1", 7000); //  //172.18.144.1
 }
 
 
 public void draw() {
 
   background(cBackground);
+  
+  
 
   //UPdate Calculate the width of the rects depending on how many bands we have
   barWidth = rectW;//width/float(bands);
@@ -196,6 +227,9 @@ public void draw() {
   // Perform the analysis
   fft.analyze();
   int maxFId = updateMAXFFTValue();//float
+
+  //SEND osc DATA
+  sendOSCData(maxFId);
 
   push();
   translate(fftPosX, fftPosY);
@@ -216,11 +250,28 @@ public void draw() {
 
 
   //Calcs
-  text("Max FREQ ID Band is "+ maxFId, 15, 50);
-  text("Max FREQ is "+ nf(getMaxValueFFT(maxFId), 1, 8), 15, 70);
+  float auxFreq = int(map(maxFId, 0, bandsThreshold, 0, 1920));//Map into FULLHD width
+  float auxFreqAmplitude = int(map(getMaxValueFFT(maxFId), 0, 0.2, 0, 100));
+
+
+  text("Dominant FREQ ID Band is "+ maxFId+ " -> [0, 1920] ->"+auxFreq, 15, 50);
+  text("Dominant FREQ is "+ nf(getMaxValueFFT(maxFId), 1, 8)+ " -> [0, 100] -> "+auxFreqAmplitude, 15, 70);
 }
 
+public void sendOSCData(int _idBandMaxFr) {
+  OscMessage myMessage = new OscMessage("/maxFreq");
 
+  if (_idBandMaxFr >0 && _idBandMaxFr < bands) {
+
+    float auxFreqAmplitude = int(map(getMaxValueFFT(_idBandMaxFr), 0, 0.2, 0, 100));//Map into [0, 100]
+    float auxFreq = int(map(_idBandMaxFr, 0, bandsThreshold, 0, 1920));//Map into width of FULLHD [0, 1920]
+    myMessage.add(auxFreq);
+    myMessage.add(auxFreqAmplitude);
+
+    /* send the message */
+    oscP5.send(myMessage, myRemoteLocation);
+  }
+}
 
 
 //----------------------------------------
@@ -232,7 +283,7 @@ public void drawCustomFFTMode(int _mode, int _maxFreqIdBand) {
     beginShape();
     noFill();
     stroke(cBars);
-    strokeWeight(1);
+    strokeWeight(lineWidth);
     curveVertex(0, height);
 
     //rect(0, height-50, 100, 100);
@@ -257,9 +308,9 @@ public void drawCustomFFTMode(int _mode, int _maxFreqIdBand) {
 
       if (_mode == 1) {
         // Draw the rectangles, adjust their height using the scaleRectH factor
-        rect(auxPosX, height, barWidth, -auxPosY); //<>//
+        rect(auxPosX*scaleX, height, barWidth, -auxPosY);
       } else if (_mode == 2) {
-        curveVertex(auxPosX, height-auxPosY);
+        curveVertex(auxPosX*scaleX, height-auxPosY);
       }
     }
   }
@@ -278,11 +329,12 @@ public void drawCustomFFTMode(int _mode, int _maxFreqIdBand) {
     push();
     stroke(255);
     noFill();
-    strokeWeight(strokeWeigthCircle);
-    circle(auxPosX, height-auxPosY, sizeCircle);
+    strokeWeight(lineWidth);
+    circle(auxPosX*scaleX, height-auxPosY, sizeCircle);
     pop();
   }
 }
+
 
 public float getMaxValueFFT(int _maxFreqIdBand) {
 
@@ -322,11 +374,21 @@ public int updateMAXFFTValue() {
   return maxIndex; //fft.spectrum[maxIndex]
 }
 
-
+//--------------------------------------------
+//GUI
 void b3() {
   cp5.saveProperties("default", "default");
 }
 
 void b4() {
   cp5.loadProperties(("default.json"));
+}
+
+//--------------------------------------------
+/* incoming osc message are forwarded to the oscEvent method. */
+void oscEvent(OscMessage theOscMessage) {
+  /* print the address pattern and the typetag of the received OscMessage */
+  print("### received an osc message.");
+  print(" addrpattern: "+theOscMessage.addrPattern());
+  println(" typetag: "+theOscMessage.typetag());
 }
