@@ -7,7 +7,7 @@
  */
 
 import processing.sound.*;
-import spout.*;
+//import spout.*;
 import controlP5.*;
 import oscP5.*;
 import netP5.*;
@@ -61,7 +61,7 @@ public int lineWidth = 10;//TODO line mode more thought
 float scaleX = 1;
 
 // DECLARE A SPOUT OBJECT
-Spout spout;
+//Spout spout;
 
 public void createCUSTOMGUI(int _x, int _y) {
   cp5.addColorWheel("cBackground", 350, 10, 100 ).setRGB(color(0, 0, 0));
@@ -193,7 +193,7 @@ public void setup() {
 
   //AUDIO
   Sound.list();
-  in = new AudioIn(this, 0);
+  in = new AudioIn(this, 9);
   // start the Audio Input
   in.start();
 
@@ -203,8 +203,8 @@ public void setup() {
 
 
   //SPOUT
-  spout = new Spout(this);
-  spout.setSenderName("Spout Processing Sender");
+  //spout = new Spout(this);
+  //spout.setSenderName("Spout Processing Sender");
 
   //LOAD SAVED GUI
   cp5.loadProperties(("default.json"));//Take care and release at the end of GUI DESIGN
@@ -238,15 +238,16 @@ public void draw() {
 
 
   // Send at the size of the window
-  spout.sendTexture();
+  //spout.sendTexture();
 
   // Display info
-  text("Sending as : "
+ /* text("Sending as : "
     + spout.getSenderName() + " ("
     + spout.getSenderWidth() + "x"
     + spout.getSenderHeight() + ") - fps : "
     + spout.getSenderFps() + " : frame "
     + spout.getSenderFrame(), 15, 30);
+    */
 
 
   //Calcs
