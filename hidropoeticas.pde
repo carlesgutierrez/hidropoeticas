@@ -1,4 +1,4 @@
-/** //<>// //<>// //<>//
+/** //<>// //<>// //<>// //<>//
  Hidropoeticas
  by Carles Gutierrez
  Toolset createt for Santiago Morilla.
@@ -12,6 +12,8 @@ import controlP5.*;
 import oscP5.*;
 import netP5.*;
 
+//interactive videos Controler
+int numVideoCtrl = 7;
 
 
 // Declare the sound source and FFT analyzer variables
@@ -57,6 +59,13 @@ public int cBackground = color(0, 0, 0);
 public int cBars = color(255, 255, 255);
 public int lineWidth = 10;//TODO line mode more thought
 
+//videos
+public int heightPerVideo = 20;
+float sizeWPerVideo = 1;
+//Video interaction
+int idVid = 0;
+float pctAux= 1;
+
 //Sound vars
 float scaleX = 1;
 
@@ -88,6 +97,7 @@ public void createCUSTOMGUI(int _x, int _y) {
     .setPosition(_x, _y+20)
     .setSize(100, 10)
     .setRange(1, 2)
+    .setNumberOfTickMarks(2)
     ;
 
   // create a toggle and change the default look to a (on/off) switch look
@@ -164,6 +174,16 @@ public void createCUSTOMGUI(int _x, int _y) {
 
   cp5.addButton("b3", 0, 200, 350, 80, 12).setCaptionLabel("save default");
   cp5.addButton("b4", 0, 281, 350, 80, 12).setCaptionLabel("load default").setColorBackground(color(0, 100, 50));
+  
+  
+  //Videos
+  
+    // add a vertical slider
+  cp5.addSlider("heightPerVideo")
+     .setPosition(width*0.7,305)
+     .setSize(20, 100)
+     .setRange(2,50);
+     ;
 }
 
 public void setupDimensionsSoundBar() {
@@ -190,6 +210,7 @@ public void setup() {
   //Mode lines active
   //r1.activate(1);
 
+  sizeWPerVideo = width / numVideoCtrl;
 
   //AUDIO
   Sound.list();
@@ -214,13 +235,11 @@ public void setup() {
   myRemoteLocation = new NetAddress("127.0.0.1", 7000); //  //172.18.144.1
 }
 
-
+//----------------------------------------------------
 public void draw() {
 
   background(cBackground);
   
-  
-
   //UPdate Calculate the width of the rects depending on how many bands we have
   barWidth = rectW;//width/float(bands);
 
@@ -229,14 +248,19 @@ public void draw() {
   int maxFId = updateMAXFFTValue();//float
 
   //SEND osc DATA
-  sendOSCData(maxFId);
+  sendOSCFreqData(maxFId);
 
   push();
   translate(fftPosX, fftPosY);
   drawCustomFFTMode(modeDrawing, maxFId);//int(r1.getValue())
   pop();
 
+  //Draw Videos interaction
+  drawMainRectArea();
 
+  drawSelectedRectInteractionArea(maxFId);
+  sendOSCVideoData(maxFId);
+  
   // Send at the size of the window
   spout.sendTexture();
 
@@ -248,17 +272,73 @@ public void draw() {
     + spout.getSenderFps() + " : frame "
     + spout.getSenderFrame(), 15, 30);
 
-
-  //Calcs
+  //draw Calcs
   float auxFreq = int(map(maxFId, 0, bandsThreshold, 0, 1920));//Map into FULLHD width
   float auxFreqAmplitude = int(map(getMaxValueFFT(maxFId), 0, 0.2, 0, 100));
-
-
   text("Dominant FREQ ID Band is "+ maxFId+ " -> [0, 1920] ->"+auxFreq, 15, 50);
   text("Dominant FREQ is "+ nf(getMaxValueFFT(maxFId), 1, 8)+ " -> [0, 100] -> "+auxFreqAmplitude, 15, 70);
+  
+
 }
 
-public void sendOSCData(int _idBandMaxFr) {
+//----------------------------------------------------
+public int findIdInteraction(int _maxFId) {
+  return int(map(_maxFId, 0, bandsThreshold, 0, numVideoCtrl));
+}
+
+//----------------------------------------------------
+public void updatePctInteraction(int _maxFId) {
+
+  float auxFreq = int(map(_maxFId, 0, bandsThreshold, 0, 1920));
+  //idVid = findIdInteraction(_maxFId);
+  pctAux = map(auxFreq%sizeWPerVideo, 0, sizeWPerVideo, 0, 1);
+  //print("idVid->"+idVid);//TODO
+  //println("pctAux->"+pctAux);
+
+}
+
+
+//----------------------------------------------------
+public void drawSelectedRectInteractionArea(int _maxFId) {
+  
+  //find id interaction
+  int idVideoSelected = findIdInteraction(_maxFId);//int(map(_maxFId, 0, bandsThreshold, 0, numVideoCtrl));
+  
+  push();
+  //stroke(77,222,225, 10);
+  //strokeWeight(3);
+  fill(77,222,225, 100);
+
+  
+  for(int i=0; i < numVideoCtrl;i++){
+    if(i == idVideoSelected){
+      rect(i*sizeWPerVideo, 0, sizeWPerVideo, heightPerVideo);      
+    }
+  }
+  
+  pop();
+}
+
+
+//----------------------------------------------------
+public void drawMainRectArea() {
+  
+  
+  push();
+  stroke(77,222,225);
+  strokeWeight(3);
+  noFill();
+  rect(0, 0, width, height);
+  
+  for(int i=0; i < numVideoCtrl;i++){
+    line(i*sizeWPerVideo, 0, i*sizeWPerVideo, heightPerVideo);
+  }
+  
+  pop();
+}
+
+//----------------------------------------------------
+public void sendOSCFreqData(int _idBandMaxFr) {
   OscMessage myMessage = new OscMessage("/maxFreq");
 
   if (_idBandMaxFr >0 && _idBandMaxFr < bands) {
@@ -267,6 +347,23 @@ public void sendOSCData(int _idBandMaxFr) {
     float auxFreq = int(map(_idBandMaxFr, 0, bandsThreshold, 0, 1920));//Map into width of FULLHD [0, 1920]
     myMessage.add(auxFreq);
     myMessage.add(auxFreqAmplitude);
+
+    /* send the message */
+    oscP5.send(myMessage, myRemoteLocation);
+  }
+}
+
+//----------------------------------------------------
+public void sendOSCVideoData(int _idBandMaxFr) {
+  OscMessage myMessage = new OscMessage("/videoInteraction");
+
+  if (_idBandMaxFr >0 && _idBandMaxFr < bands) {
+
+    //Id Video
+    idVid = findIdInteraction(_idBandMaxFr);
+    updatePctInteraction(_idBandMaxFr);
+    myMessage.add(idVid);
+    myMessage.add(pctAux);
 
     /* send the message */
     oscP5.send(myMessage, myRemoteLocation);
