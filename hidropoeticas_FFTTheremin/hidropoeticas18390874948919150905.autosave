@@ -1,4 +1,4 @@
-/** //<>// //<>// //<>// //<>//
+/** //<>// //<>//
  Hidropoeticas
  by Carles Gutierrez
  Toolset createt for Santiago Morilla.
@@ -7,7 +7,7 @@
  */
 
 import processing.sound.*;
-//import spout.*;
+import spout.*;
 import controlP5.*;
 import oscP5.*;
 import netP5.*;
@@ -61,16 +61,12 @@ public int lineWidth = 10;//TODO line mode more thought
 
 //videos
 public int heightPerVideo = 20;
-float sizeWPerVideo = 1;
-//Video interaction
-int idVid = 0;
-float pctAux= 1;
 
 //Sound vars
 float scaleX = 1;
 
 // DECLARE A SPOUT OBJECT
-//Spout spout;
+Spout spout;
 
 public void createCUSTOMGUI(int _x, int _y) {
   cp5.addColorWheel("cBackground", 350, 10, 100 ).setRGB(color(0, 0, 0));
@@ -180,9 +176,9 @@ public void createCUSTOMGUI(int _x, int _y) {
   
     // add a vertical slider
   cp5.addSlider("heightPerVideo")
-     .setPosition(width*0.7,305)
+     .setPosition(width*0.9,100)
      .setSize(20, 100)
-     .setRange(2,50);
+     .setRange(2,250);
      ;
 }
 
@@ -210,11 +206,10 @@ public void setup() {
   //Mode lines active
   //r1.activate(1);
 
-  sizeWPerVideo = width / numVideoCtrl;
 
   //AUDIO
   Sound.list();
-  in = new AudioIn(this, 9);
+  in = new AudioIn(this, 0);
   // start the Audio Input
   in.start();
 
@@ -224,8 +219,8 @@ public void setup() {
 
 
   //SPOUT
-  //spout = new Spout(this);
-  //spout.setSenderName("Spout Processing Sender");
+  spout = new Spout(this);
+  spout.setSenderName("Spout Processing Sender");
 
   //LOAD SAVED GUI
   cp5.loadProperties(("default.json"));//Take care and release at the end of GUI DESIGN
@@ -235,7 +230,7 @@ public void setup() {
   myRemoteLocation = new NetAddress("127.0.0.1", 7000); //  //172.18.144.1
 }
 
-//----------------------------------------------------
+
 public void draw() {
 
   background(cBackground);
@@ -248,7 +243,7 @@ public void draw() {
   int maxFId = updateMAXFFTValue();//float
 
   //SEND osc DATA
-  sendOSCFreqData(maxFId);
+  sendOSCData(maxFId);
 
   push();
   translate(fftPosX, fftPosY);
@@ -257,21 +252,17 @@ public void draw() {
 
   //Draw Videos interaction
   drawMainRectArea();
-
-  drawSelectedRectInteractionArea(maxFId);
-  sendOSCVideoData(maxFId);
   
   // Send at the size of the window
-  //spout.sendTexture();
+  spout.sendTexture();
 
   // Display info
- /* text("Sending as : "
+  text("Sending as : "
     + spout.getSenderName() + " ("
     + spout.getSenderWidth() + "x"
     + spout.getSenderHeight() + ") - fps : "
     + spout.getSenderFps() + " : frame "
     + spout.getSenderFrame(), 15, 30);
-    */
 
   //draw Calcs
   float auxFreq = int(map(maxFId, 0, bandsThreshold, 0, 1920));//Map into FULLHD width
@@ -282,48 +273,11 @@ public void draw() {
 
 }
 
-//----------------------------------------------------
-public int findIdInteraction(int _maxFId) {
-  return int(map(_maxFId, 0, bandsThreshold, 0, numVideoCtrl));
-}
-
-//----------------------------------------------------
-public void updatePctInteraction(int _maxFId) {
-
-  float auxFreq = int(map(_maxFId, 0, bandsThreshold, 0, 1920));
-  //idVid = findIdInteraction(_maxFId);
-  pctAux = map(auxFreq%sizeWPerVideo, 0, sizeWPerVideo, 0, 1);
-  //print("idVid->"+idVid);//TODO
-  //println("pctAux->"+pctAux);
-
-}
-
-
-//----------------------------------------------------
-public void drawSelectedRectInteractionArea(int _maxFId) {
-  
-  //find id interaction
-  int idVideoSelected = findIdInteraction(_maxFId);//int(map(_maxFId, 0, bandsThreshold, 0, numVideoCtrl));
-  
-  push();
-  //stroke(77,222,225, 10);
-  //strokeWeight(3);
-  fill(77,222,225, 100);
-
-  
-  for(int i=0; i < numVideoCtrl;i++){
-    if(i == idVideoSelected){
-      rect(i*sizeWPerVideo, 0, sizeWPerVideo, heightPerVideo);      
-    }
-  }
-  
-  pop();
-}
-
-
-//----------------------------------------------------
 public void drawMainRectArea() {
   
+  //Calc num subrects
+  
+  float sizeWPerVideo = width / numVideoCtrl;
   
   push();
   stroke(77,222,225);
@@ -338,8 +292,7 @@ public void drawMainRectArea() {
   pop();
 }
 
-//----------------------------------------------------
-public void sendOSCFreqData(int _idBandMaxFr) {
+public void sendOSCData(int _idBandMaxFr) {
   OscMessage myMessage = new OscMessage("/maxFreq");
 
   if (_idBandMaxFr >0 && _idBandMaxFr < bands) {
@@ -348,23 +301,6 @@ public void sendOSCFreqData(int _idBandMaxFr) {
     float auxFreq = int(map(_idBandMaxFr, 0, bandsThreshold, 0, 1920));//Map into width of FULLHD [0, 1920]
     myMessage.add(auxFreq);
     myMessage.add(auxFreqAmplitude);
-
-    /* send the message */
-    oscP5.send(myMessage, myRemoteLocation);
-  }
-}
-
-//----------------------------------------------------
-public void sendOSCVideoData(int _idBandMaxFr) {
-  OscMessage myMessage = new OscMessage("/videoInteraction");
-
-  if (_idBandMaxFr >0 && _idBandMaxFr < bands) {
-
-    //Id Video
-    idVid = findIdInteraction(_idBandMaxFr);
-    updatePctInteraction(_idBandMaxFr);
-    myMessage.add(idVid);
-    myMessage.add(pctAux);
 
     /* send the message */
     oscP5.send(myMessage, myRemoteLocation);

@@ -4,6 +4,11 @@
     "max": 960,
     "value": 0
   },
+  "/heightPerVideo": {
+    "min": 0,
+    "max": 1080,
+    "value": 43.20000076293945
+  },
   "/sizeCircle": {
     "min": 10,
     "max": 100,
@@ -17,27 +22,17 @@
   "/thresholdMinimInteractionFFT": {
     "min": 9.99999993922529E-9,
     "max": 0.10000000149011612,
-    "value": 3.000000142492354E-4
+    "value": 0.013000008650124073
   },
-  "/gapX": {
-    "min": 0,
-    "max": 100,
-    "value": 10
-  },
-  "/scaleRectH": {
+  "/typeOSCMode": {
     "min": 1,
-    "max": 100,
-    "value": 3
+    "max": 2,
+    "value": 1
   },
   "/modeDrawing": {
     "min": 1,
     "max": 2,
     "value": 2
-  },
-  "/lineWidth": {
-    "min": 1,
-    "max": 20,
-    "value": 7.650000095367432
   },
   "/bandsThreshold": {
     "min": 0,
@@ -49,5 +44,22 @@
     "max": 10,
     "value": 3
   },
-  "/bSumMode": {"value": 0}
+  "/bSumMode": {"value": 0},
+  "/gapX": {
+    "min": 0,
+    "max": 100,
+    "value": 10
+  },
+  "/scaleRectH": {
+    "min": 1,
+    "max": 100,
+    "value": 3
+  },
+  "/lineWidth": {
+    "min": 1,
+    "max": 20,
+    "value": 7.650000095367432
+  },
+  "/bOSCActive": {"value": 1},
+  "/bCircleDrawer": {"value": 1}
 }
