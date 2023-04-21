@@ -247,7 +247,7 @@ public void setup() {
   Sound.list();
   s = new Sound(this);
   s.inputDevice(1);
-  in = new AudioIn(this, 0);
+  in = new AudioIn(this, 9);
   // start the Audio Input
   in.start();
 
