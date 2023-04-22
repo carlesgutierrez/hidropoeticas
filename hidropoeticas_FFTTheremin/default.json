@@ -4,11 +4,6 @@
     "max": 960,
     "value": 0
   },
-  "/heightPerVideo": {
-    "min": 0,
-    "max": 1080,
-    "value": 43.20000076293945
-  },
   "/sizeCircle": {
     "min": 10,
     "max": 100,
@@ -22,7 +17,7 @@
   "/thresholdMinimInteractionFFT": {
     "min": 9.99999993922529E-9,
     "max": 0.10000000149011612,
-    "value": 0.013000008650124073
+    "value": 0.05500001087784767
   },
   "/typeOSCMode": {
     "min": 1,
@@ -58,7 +53,7 @@
   "/lineWidth": {
     "min": 1,
     "max": 20,
-    "value": 7.650000095367432
+    "value": 4.609999656677246
   },
   "/bOSCActive": {"value": 1},
   "/bCircleDrawer": {"value": 1}
