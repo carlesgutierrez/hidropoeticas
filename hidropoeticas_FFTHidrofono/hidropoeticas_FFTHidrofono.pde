@@ -288,8 +288,10 @@ public void setup() {
   //AUDIO
   Sound.list();
   s = new Sound(this);
+
   s.inputDevice(idAudioDevice);
   in = new AudioIn(this, idAudioInput);
+
   // start the Audio Input
   in.start();
 
