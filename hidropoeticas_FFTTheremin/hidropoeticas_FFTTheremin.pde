@@ -65,8 +65,8 @@ FFT fft;
 ControlP5 cp5;
 
 //OSC vars
-OscP5 oscP5;
-NetAddress myRemoteLocation;
+OscP5 oscP5Arena, oscP5Ableton;
+NetAddress myRemoteLocationArena, myRemoteLocationAbleton;
 
 // Define how many FFT bands to use (this needs to be a power of two)
 int bands = 512;//128;
@@ -305,9 +305,13 @@ public void setup() {
   //LOAD SAVED GUI
   cp5.loadProperties(("default.json"));//Take care and release at the end of GUI DESIGN
 
-  //OSC
-  oscP5 = new OscP5(this, 7001);
-  myRemoteLocation = new NetAddress("127.0.0.1", 7000); //  //172.18.144.1
+  //OSC ARENA
+  oscP5Arena = new OscP5(this, 7001);
+  myRemoteLocationArena = new NetAddress("127.0.0.1", 7000); //  //172.18.144.1
+
+  //OSC Ableton
+  oscP5Ableton = new OscP5(this, 8001);
+  myRemoteLocationAbleton = new NetAddress("192.168.1.104", 8000); //  //172.18.144.1
 }
 
 //----------------------------------------------------
@@ -323,7 +327,7 @@ public void draw() {
   int maxFId = updateMAXFFTValue();//float
 
   //SEND osc DATA
-  sendOSCFreqData(maxFId);
+  sendOSCAbletonFreqData(maxFId);
 
   push();
   translate(fftPosX, fftPosY);
@@ -333,7 +337,7 @@ public void draw() {
   //Draw Videos interaction
   drawMainRectArea();
   drawSelectedRectInteractionArea(maxFId);
-  sendOSCVideoData(maxFId);
+  sendOSCArenaVideoData(maxFId);
 
   // Send at the size of the window
   spout.sendTexture();
@@ -410,24 +414,24 @@ public void drawMainRectArea() {
 }
 
 //----------------------------------------------------
-public void sendOSCFreqData(int _idBandMaxFr) {
+public void sendOSCAbletonFreqData(int _idBandMaxFr) {
   OscMessage myMessage = new OscMessage("/maxFreq");
 
   if (_idBandMaxFr >0 && _idBandMaxFr < bands) {
 
-    float auxFreqAmplitude = int(map(getMaxValueFFT(_idBandMaxFr), 0, 0.2, 0, 100));//Map into [0, 100]
-    float auxFreq = int(map(_idBandMaxFr, 0, bandsThreshold, 0, 1920));//Map into width of FULLHD [0, 1920]
-    myMessage.add(auxFreq);
+    float auxFreqAmplitude = map(getMaxValueFFT(_idBandMaxFr), 0.0, 0.2, 0.0, 1.0);//Map into [0, 100]
+    //float auxFreq = int(map(_idBandMaxFr, 0, bandsThreshold, 0, 1920));//Map into width of FULLHD [0, 1920]
+    //myMessage.add(auxFreq);
     myMessage.add(auxFreqAmplitude);
 
     /* send the message */
-    oscP5.send(myMessage, myRemoteLocation);
+    oscP5Ableton.send(myMessage, myRemoteLocationAbleton);
   }
   
 }
 
 //----------------------------------------------------
-public void sendOSCVideoData(int _idBandMaxFr) {
+public void sendOSCArenaVideoData(int _idBandMaxFr) {
 
   /*
   
@@ -456,7 +460,7 @@ public void sendOSCVideoData(int _idBandMaxFr) {
         //println(pathOSCVid);
         OscMessage myMessage_id = new OscMessage(pathOSCVid_Id);
         myMessage_id.add(1); //"send 0 or 1"
-        oscP5.send(myMessage_id, myRemoteLocation);
+        oscP5Arena.send(myMessage_id, myRemoteLocationArena);
 
         if (typeOSCMode == 1) {//Todo check last and do not repeat  
           //OSC pct Vídeo
@@ -464,7 +468,7 @@ public void sendOSCVideoData(int _idBandMaxFr) {
           //println(pathOSCVid);
           OscMessage myMessage_pct = new OscMessage(pathOSCVid_PCT);
           myMessage_pct.add(pctAux);
-          oscP5.send(myMessage_pct, myRemoteLocation);
+          oscP5Arena.send(myMessage_pct, myRemoteLocationArena);
         } else {
           //TODO check if other modes are required
         }
@@ -480,7 +484,7 @@ public void sendOSCVideoData(int _idBandMaxFr) {
       myMessageVideosAlpha.add(auxFreqAmplitude);
   
       /* send the message */
-      oscP5.send(myMessageVideosAlpha, myRemoteLocation);
+      oscP5Arena.send(myMessageVideosAlpha, myRemoteLocationArena);
     }
     
     //save last value
