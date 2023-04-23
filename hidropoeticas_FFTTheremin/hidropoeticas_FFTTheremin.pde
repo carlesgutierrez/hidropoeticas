@@ -18,7 +18,7 @@ int numVideoCtrl = 7;
 // Declare the sound source and FFT analyzer variables
 AudioIn in;
 //ID Audio IN inputs
-int idAudioDevice = 0; // 5 is Microphone (Realtek Audio) with 2 inputs
+int idAudioDevice = 10; // 5 is Microphone (Realtek Audio) with 2 inputs
 //8 is U-phoria connected with 2 inputs.
 int idAudioInput = 0;
 /* Later at setup...
@@ -112,7 +112,8 @@ float sizeWPerVideo = 1;
 //Video interaction
 int idVid = 0;
 int last_idVid = -1;
-float pctAux= 1;
+float pctAux = 1;
+float pctLerp = 1;
 int last_maxIndex = 0;
 
 //Sound vars
@@ -353,7 +354,7 @@ public void draw() {
 
   //draw Calcs
   float auxFreq = int(map(maxFId, 0, bandsThreshold, 0, 1920));//Map into FULLHD width
-  float auxFreqAmplitude = int(map(getMaxValueFFT(maxFId), 0, 0.2, 0, 100));
+  float auxFreqAmplitude = int(map(getMaxValueFFT(maxFId), 0, 0.2, 0, height));
   text("Dominant FREQ ID Band is "+ maxFId+ " -> [0, 1920] ->"+auxFreq, 15, 50);
   text("Dominant FREQ is "+ nf(getMaxValueFFT(maxFId), 1, 8)+ " -> [0, 100] -> "+auxFreqAmplitude, 15, 70);
 }
@@ -369,6 +370,9 @@ public void updatePctInteraction(int _maxFId) {
   float auxFreq = int(map(_maxFId, 0, bandsThreshold, 0, 1920));
   //idVid = findIdInteraction(_maxFId);
   pctAux = map(auxFreq%sizeWPerVideo, 0, sizeWPerVideo, 0, 1);
+  
+  pctLerp = lerp(pctLerp, pctAux, 0.01);
+  //println("auxFreq = "+ auxFreq);
   //print("idVid->"+idVid);//TODO
   //println("pctAux->"+pctAux);
 }
@@ -420,9 +424,9 @@ public void sendOSCAbletonFreqData(int _idBandMaxFr) {
   if (_idBandMaxFr >0 && _idBandMaxFr < bands) {
 
     float auxFreqAmplitude = map(getMaxValueFFT(_idBandMaxFr), 0.0, 0.2, 0.0, 1.0);//Map into [0, 100]
-    //float auxFreq = int(map(_idBandMaxFr, 0, bandsThreshold, 0, 1920));//Map into width of FULLHD [0, 1920]
+    float auxFreq = (map(_idBandMaxFr, 0, bandsThreshold, 0, 1));//Map into width of FULLHD [0, 1920]
     //myMessage.add(auxFreq);
-    myMessage.add(auxFreqAmplitude);
+    myMessage.add(auxFreq);
 
     /* send the message */
     oscP5Ableton.send(myMessage, myRemoteLocationAbleton);
@@ -453,21 +457,21 @@ public void sendOSCArenaVideoData(int _idBandMaxFr) {
     idVid = findIdInteraction(_idBandMaxFr);
     updatePctInteraction(_idBandMaxFr);
 
-    if (last_idVid != idVid) {
+    if (last_idVid != idVid || (typeOSCMode == 1)) { //RECOVERY
       if (bOSCActive) {
         //OSC id Vídeo
         String pathOSCVid_Id = "/composition/columns/"+(idVid+1)+"/connect";
         //println(pathOSCVid);
-        OscMessage myMessage_id = new OscMessage(pathOSCVid_Id);
-        myMessage_id.add(1); //"send 0 or 1"
-        oscP5Arena.send(myMessage_id, myRemoteLocationArena);
+        OscMessage myMessage_id = new OscMessage(pathOSCVid_Id);  // RECOVERY
+        myMessage_id.add(1); //"send 0 or 1"// RECOVERY
+        oscP5Arena.send(myMessage_id, myRemoteLocationArena);// RECOVERY
 
         if (typeOSCMode == 1) {//Todo check last and do not repeat  
           //OSC pct Vídeo
-          String pathOSCVid_PCT = "/composition/layers/3/clips/"+(idVid+1)+"/transport/position";
-          //println(pathOSCVid);
+          String pathOSCVid_PCT = "/composition/layers/2/clips/"+(idVid+1)+"/transport/position";
+          //println("typeOSCMode == 1 "+(idVid+1)+" pctLerp -> "+pctAux+" pctLerp ->"+pctLerp);
           OscMessage myMessage_pct = new OscMessage(pathOSCVid_PCT);
-          myMessage_pct.add(pctAux);
+          myMessage_pct.add(pctLerp); //pctAux o pctLerp
           oscP5Arena.send(myMessage_pct, myRemoteLocationArena);
         } else {
           //TODO check if other modes are required
@@ -549,7 +553,7 @@ public void drawCustomFFTMode(int _mode, int _maxFreqIdBand) {
     push();
     stroke(255);
     noFill();
-    strokeWeight(lineWidth);
+    strokeWeight(2);//lineWidth
     circle(auxPosX*scaleX, height-auxPosY, sizeCircle);
     pop();
   }

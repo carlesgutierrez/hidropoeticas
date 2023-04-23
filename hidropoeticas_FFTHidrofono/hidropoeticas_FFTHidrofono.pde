@@ -18,9 +18,9 @@ int numVideoCtrl = 7;
 // Declare the sound source and FFT analyzer variables
 AudioIn in;
 //ID Audio IN inputs
-int idAudioDevice = 7; // 5 is Microphone (Realtek Audio) with 2 inputs
+int idAudioDevice = 10; // 5 is Microphone (Realtek Audio) with 2 inputs
 //8 is U-phoria connected with 2 inputs.
-int idAudioInput = 0;
+int idAudioInput = 1;
 /* Later at setup...
   s.inputDevice(idAudioDevice);
   in = new AudioIn(this, idAudioInput);
