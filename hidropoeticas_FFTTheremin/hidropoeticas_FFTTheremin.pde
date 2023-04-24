@@ -18,7 +18,7 @@ int numVideoCtrl = 7;
 // Declare the sound source and FFT analyzer variables
 AudioIn in;
 //ID Audio IN inputs
-int idAudioDevice = 10; // 5 is Microphone (Realtek Audio) with 2 inputs
+int idAudioDevice = 12; // 5 is Microphone (Realtek Audio) with 2 inputs
 //8 is U-phoria connected with 2 inputs.
 int idAudioInput = 0;
 /* Later at setup...
@@ -312,7 +312,7 @@ public void setup() {
 
   //OSC Ableton
   oscP5Ableton = new OscP5(this, 8001);
-  myRemoteLocationAbleton = new NetAddress("192.168.1.104", 8000); //  //172.18.144.1
+  myRemoteLocationAbleton = new NetAddress("127.0.0.1", 8000); // 192.168.1.104 //172.18.144.1
 }
 
 //----------------------------------------------------

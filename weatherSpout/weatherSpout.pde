@@ -85,7 +85,7 @@ public void draw() {
 
 //----------------------------------------------------
 public void drawSuperiorTextLine(){
-  int initPosX = round(width*0.22);//initial position
+  int initPosX = round(width*0.224);//initial position
   int posX = initPosX; 
   int posY = 10;
   
@@ -154,14 +154,14 @@ public void drawSuperiorTextLine(){
 
 //----------------------------------------------------
 public void  drawInferiorTextLine(){
-  int posX = round(width*0.45);
+  int posX = round(width*0.425);
   int posY = height - 10;
   textAlign(LEFT, BOTTOM);
   fill(#00FFFF);
-  text("HIDROPOETICS:", posX, posY);//Title
-  posX = posX+round(textWidth("HIDROPOETICS:"));
+  text("HIDROPOETICS: ", posX, posY);//Title
+  posX = posX+round(textWidth("HIDROPOETICS: "));
   fill(#FFFFFF);
-  text(locationName, posX, posY);
+  text("39º25'18.2\"N+6º30'10.5\"W", posX, posY);//locationName
 }
 
 /*
