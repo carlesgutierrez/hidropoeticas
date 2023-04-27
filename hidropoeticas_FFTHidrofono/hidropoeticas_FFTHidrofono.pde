@@ -1,4 +1,4 @@
-/** //<>// //<>// //<>// //<>// //<>//
+/** //<>// //<>// //<>// //<>// //<>// //<>//
  Hidropoeticas
  by Carles Gutierrez
  Toolset createt for Santiago Morilla.
@@ -18,50 +18,54 @@ int numVideoCtrl = 7;
 // Declare the sound source and FFT analyzer variables
 AudioIn in;
 //ID Audio IN inputs
-int idAudioDevice = 13; // 5 is Microphone (Realtek Audio) with 2 inputs
+int idAudioDevice = 15; // 5 is Microphone (Realtek Audio) with 2 inputs
 //8 is U-phoria connected with 2 inputs.
 int idAudioInput = 0;
 /* Later at setup...
-  s.inputDevice(idAudioDevice);
-  in = new AudioIn(this, idAudioInput);
-*/
+ s.inputDevice(idAudioDevice);
+ in = new AudioIn(this, idAudioInput);
+ */
 
 /*
 device id 0: Port Speakers (USB Audio CODEC )
-  max inputs : 0
-  max outputs: 0
-device id 1: Port default (Realtek Audio)
-  max inputs : 0
-  max outputs: 0
-device id 2: Port Microphone (Realtek Audio)
-  max inputs : 0
-  max outputs: 0
-device id 3: Port Microphone (USB Audio CODEC )
-  max inputs : 0
-  max outputs: 0
-device id 4: Primary Sound Driver
-  max inputs : 0
-  max outputs: 2   (default)
-device id 5: Speakers (USB Audio CODEC )
-  max inputs : 0
-  max outputs: 2
-device id 6: default (Realtek Audio)
-  max inputs : 0
-  max outputs: 2
-device id 7: Primary Sound Capture Driver
-  max inputs : 2   (default)
-  max outputs: 0
-device id 8: Microphone (USB Audio CODEC )
-  max inputs : 2
-  max outputs: 0
-device id 9: Microphone (Realtek Audio)
-  max inputs : 2
-  max outputs: 0
-*/
+ max inputs : 0
+ max outputs: 0
+ device id 1: Port default (Realtek Audio)
+ max inputs : 0
+ max outputs: 0
+ device id 2: Port Microphone (Realtek Audio)
+ max inputs : 0
+ max outputs: 0
+ device id 3: Port Microphone (USB Audio CODEC )
+ max inputs : 0
+ max outputs: 0
+ device id 4: Primary Sound Driver
+ max inputs : 0
+ max outputs: 2   (default)
+ device id 5: Speakers (USB Audio CODEC )
+ max inputs : 0
+ max outputs: 2
+ device id 6: default (Realtek Audio)
+ max inputs : 0
+ max outputs: 2
+ device id 7: Primary Sound Capture Driver
+ max inputs : 2   (default)
+ max outputs: 0
+ device id 8: Microphone (USB Audio CODEC )
+ max inputs : 2
+ max outputs: 0
+ device id 9: Microphone (Realtek Audio)
+ max inputs : 2
+ max outputs: 0
+ */
 
 Sound s;
-SoundFile sample;
+SoundFile soundfile;//HACK
+
 FFT fft;
+
+
+
 ControlP5 cp5;
 
 //OSC vars
@@ -95,7 +99,7 @@ public float thresholdMinimInteractionFFT = 0.0003;
 public boolean bSumMode = false;
 public int bandsThreshold = 51;//300;
 
-public boolean bCircleDrawer = false; //<>//
+public boolean bCircleDrawer = false;
 public int sizeCircle = 100;
 //Colors
 public int cBackground = color(0, 0, 0);
@@ -224,39 +228,37 @@ public void createCUSTOMGUI(int _x, int _y) {
   cp5.addButton("b3", 0, 200, 350, 80, 12).setCaptionLabel("save default");
   cp5.addButton("b4", 0, 281, 350, 80, 12).setCaptionLabel("load default").setColorBackground(color(0, 100, 50));
 
-/*
+  /*
   //OSC
-  // create a toggle and change the default look to a (on/off) switch look
-  cp5.addToggle("bOSCActive")
-    .setPosition(_x+width*.5, _y+40)
-    .setSize(50, 10)
-    ;
-
-  // add a vertical slider
-  cp5.addSlider("typeOSCMode")
-    .setPosition(_x+width*.55, _y+40)
-    .setSize(100, 10)
-    .setRange(1, 2)
-    .setNumberOfTickMarks(2)
-    ;
-*/
-  //Interaction UX 
+   // create a toggle and change the default look to a (on/off) switch look
+   cp5.addToggle("bOSCActive")
+   .setPosition(_x+width*.5, _y+40)
+   .setSize(50, 10)
+   ;
+   
+   // add a vertical slider
+   cp5.addSlider("typeOSCMode")
+   .setPosition(_x+width*.55, _y+40)
+   .setSize(100, 10)
+   .setRange(1, 2)
+   .setNumberOfTickMarks(2)
+   ;
+   */
+  //Interaction UX
   // create a toggle and change the default look to a (on/off) switch look
   cp5.addToggle("bCircleDrawer")
     .setPosition(_x+width*0.8, _y+0)
     .setSize(50, 50)
     ;
-  
+
   /*
   // add a vertical slider
-  cp5.addSlider("heightPerVideo")
-    .setPosition(_x+width*0.9, _y+0)
-    .setSize(20, 100)
-    .setRange(0, height);
-  ;
-  */
-  
- 
+   cp5.addSlider("heightPerVideo")
+   .setPosition(_x+width*0.9, _y+0)
+   .setSize(20, 100)
+   .setRange(0, height);
+   ;
+   */
 }
 
 public void setupDimensionsSoundBar() {
@@ -272,7 +274,18 @@ public void setup() {
 
   setupDimensionsSoundBar();
 
-  //surface.setLocation(-width, 0);
+  //HACK
+  // Load a soundfile
+  soundfile = new SoundFile(this, "sonidos_subaquatic_Fuente_Fria_3.wav");
+  // These methods return useful infos about the file
+  println("SFSampleRate= " + soundfile.sampleRate() + " Hz");
+  println("SFSamples= " + soundfile.frames() + " samples");
+  println("SFDuration= " + soundfile.duration() + " seconds");
+  // Play the file in a loop
+  soundfile.loop();
+  
+  float amplitude = 0.25;//map(mouseY, 0, width, 0.2, 1.0);
+  soundfile.amp(amplitude);
 
   textureMode(NORMAL);
   background(255);
@@ -289,7 +302,7 @@ public void setup() {
   Sound.list();
   s = new Sound(this);
 
-  s.inputDevice(idAudioDevice);
+  s.inputDevice(idAudioDevice);//
   in = new AudioIn(this, idAudioInput);
 
   // start the Audio Input
@@ -297,8 +310,8 @@ public void setup() {
   in.play(); //Internal Sound route path Joaku
   // Create the FFT analyzer and connect the playing soundfile to it.
   fft = new FFT(this, bands);
-  fft.input(in);
-
+  //fft.input(in);
+  fft.input(soundfile);
 
   //SPOUT
   spout = new Spout(this);
@@ -307,11 +320,11 @@ public void setup() {
   //LOAD SAVED GUI
   cp5.loadProperties(("default.json"));//Take care and release at the end of GUI DESIGN
 
-/*
+  /*
   //OSC
-  oscP5 = new OscP5(this, 7001);
-  myRemoteLocation = new NetAddress("127.0.0.1", 7000); //  //172.18.144.1
-  */
+   oscP5 = new OscP5(this, 7001);
+   myRemoteLocation = new NetAddress("127.0.0.1", 7000); //  //172.18.144.1
+   */
 }
 
 //----------------------------------------------------
@@ -415,57 +428,57 @@ public void drawMainRectArea() {
 
 /*
 //----------------------------------------------------
-public void sendOSCFreqData(int _idBandMaxFr) {
-  OscMessage myMessage = new OscMessage("/maxFreq");
-
-  if (_idBandMaxFr >0 && _idBandMaxFr < bands) {
-
-    float auxFreqAmplitude = int(map(getMaxValueFFT(_idBandMaxFr), 0, 0.2, 0, 100));//Map into [0, 100]
-    float auxFreq = int(map(_idBandMaxFr, 0, bandsThreshold, 0, 1920));//Map into width of FULLHD [0, 1920]
-    myMessage.add(auxFreq);
-    myMessage.add(auxFreqAmplitude);
-    oscP5.send(myMessage, myRemoteLocation);
-  }
-}
-
-//----------------------------------------------------
-public void sendOSCVideoData(int _idBandMaxFr) {
-
-
-  if (_idBandMaxFr >0 && _idBandMaxFr < bands) {
-
-    //update Id Video and pct
-    idVid = findIdInteraction(_idBandMaxFr);
-    updatePctInteraction(_idBandMaxFr);
-
-    if (last_idVid != idVid) {
-      if (bOSCActive) {
-        //OSC id Vídeo
-        String pathOSCVid_Id = "/composition/columns/"+(idVid+1)+"/connect";
-        //println(pathOSCVid);
-        OscMessage myMessage_id = new OscMessage(pathOSCVid_Id);
-        myMessage_id.add(1); //"send 0 or 1"
-        oscP5.send(myMessage_id, myRemoteLocation);
-
-        if (typeOSCMode == 1) {//Todo check last and do not repeat  
-          //OSC pct Vídeo
-          String pathOSCVid_PCT = "/composition/layers/3/clips/"+(idVid+1)+"/transport/position";
-          //println(pathOSCVid);
-          OscMessage myMessage_pct = new OscMessage(pathOSCVid_PCT);
-          myMessage_pct.add(pctAux);
-          oscP5.send(myMessage_pct, myRemoteLocation);
-        } else {
-          //TODO check if other modes are required
-        }
-      }
-    }
-    
-    //save last value
-    last_idVid = idVid;
-  }
-  //TODO ELSE disconnect all ? another column in black mode?
-}
-*/
+ public void sendOSCFreqData(int _idBandMaxFr) {
+ OscMessage myMessage = new OscMessage("/maxFreq");
+ 
+ if (_idBandMaxFr >0 && _idBandMaxFr < bands) {
+ 
+ float auxFreqAmplitude = int(map(getMaxValueFFT(_idBandMaxFr), 0, 0.2, 0, 100));//Map into [0, 100]
+ float auxFreq = int(map(_idBandMaxFr, 0, bandsThreshold, 0, 1920));//Map into width of FULLHD [0, 1920]
+ myMessage.add(auxFreq);
+ myMessage.add(auxFreqAmplitude);
+ oscP5.send(myMessage, myRemoteLocation);
+ }
+ }
+ 
+ //----------------------------------------------------
+ public void sendOSCVideoData(int _idBandMaxFr) {
+ 
+ 
+ if (_idBandMaxFr >0 && _idBandMaxFr < bands) {
+ 
+ //update Id Video and pct
+ idVid = findIdInteraction(_idBandMaxFr);
+ updatePctInteraction(_idBandMaxFr);
+ 
+ if (last_idVid != idVid) {
+ if (bOSCActive) {
+ //OSC id Vídeo
+ String pathOSCVid_Id = "/composition/columns/"+(idVid+1)+"/connect";
+ //println(pathOSCVid);
+ OscMessage myMessage_id = new OscMessage(pathOSCVid_Id);
+ myMessage_id.add(1); //"send 0 or 1"
+ oscP5.send(myMessage_id, myRemoteLocation);
+ 
+ if (typeOSCMode == 1) {//Todo check last and do not repeat
+ //OSC pct Vídeo
+ String pathOSCVid_PCT = "/composition/layers/3/clips/"+(idVid+1)+"/transport/position";
+ //println(pathOSCVid);
+ OscMessage myMessage_pct = new OscMessage(pathOSCVid_PCT);
+ myMessage_pct.add(pctAux);
+ oscP5.send(myMessage_pct, myRemoteLocation);
+ } else {
+ //TODO check if other modes are required
+ }
+ }
+ }
+ 
+ //save last value
+ last_idVid = idVid;
+ }
+ //TODO ELSE disconnect all ? another column in black mode?
+ }
+ */
 
 //----------------------------------------
 public void drawCustomFFTMode(int _mode, int _maxFreqIdBand) {
@@ -565,7 +578,7 @@ public int updateMAXFFTValue() {
     }
   }
   last_maxIndex = maxIndex;
-  
+
   return maxIndex; //fft.spectrum[maxIndex]
 }
 
@@ -581,11 +594,11 @@ void b4() {
 
 /*
 //--------------------------------------------
-// incoming osc message are forwarded to the oscEvent method.
-void oscEvent(OscMessage theOscMessage) {
-  // print the address pattern and the typetag of the received OscMessage 
-  print("### received an osc message.");
-  print(" addrpattern: "+theOscMessage.addrPattern());
-  println(" typetag: "+theOscMessage.typetag());
-} 
-*/
+ // incoming osc message are forwarded to the oscEvent method.
+ void oscEvent(OscMessage theOscMessage) {
+ // print the address pattern and the typetag of the received OscMessage
+ print("### received an osc message.");
+ print(" addrpattern: "+theOscMessage.addrPattern());
+ println(" typetag: "+theOscMessage.typetag());
+ }
+ */

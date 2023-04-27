@@ -7,7 +7,7 @@
   "/sizeCircle": {
     "min": 10,
     "max": 100,
-    "value": 100
+    "value": 42.39999771118164
   },
   "/fftPosY": {
     "min": 0,
@@ -22,28 +22,28 @@
   "/typeOSCMode": {
     "min": 1,
     "max": 2,
-    "value": 2
+    "value": 1
   },
   "/modeDrawing": {
     "min": 1,
     "max": 2,
-    "value": 2
+    "value": 1
   },
   "/bandsThreshold": {
     "min": 0,
     "max": 512,
-    "value": 51
+    "value": 194.55999755859375
   },
   "/rectW": {
     "min": 1,
     "max": 10,
-    "value": 3
+    "value": 3.9699997901916504
   },
   "/bSumMode": {"value": 0},
   "/gapX": {
     "min": 0,
     "max": 100,
-    "value": 10
+    "value": 8
   },
   "/scaleRectH": {
     "min": 1,

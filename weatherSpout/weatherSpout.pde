@@ -212,7 +212,7 @@ void getWeatherData() {
 void getNewData(JSONObject _data) {
   //currentConditions = _data.getString("time");.currentConditions;
 
-  if (_data.isNull("feelslike")==false)feelslike = _data.getFloat("feelslike");
+  if (_data.isNull("feelslike")==false)feelslike =  feelslike = FtoC(_data.getFloat("feelslike"));
   
   if (_data.isNull("preciptype")==false)preciptype = _data.getFloat("preciptype");
   
@@ -256,4 +256,10 @@ void getNewData(JSONObject _data) {
   //Update final text line
   //text2ShowBase = dateBase+dateFinal+timeBase+timeFinal+tempBase+tempFinal+precipBase+precipFinal+windBase+windFinal+pressureBase+pressureFinal+cloudBase+cloudFinal+solarBase+solarFinal;
 
+}
+
+
+float FtoC(float fTemp) {
+  var celsius = int(((fTemp - 32) * 5) / 9);
+  return celsius;
 }

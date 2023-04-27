@@ -18,7 +18,7 @@ int numVideoCtrl = 7;
 // Declare the sound source and FFT analyzer variables
 AudioIn in;
 //ID Audio IN inputs
-int idAudioDevice = 12; // 5 is Microphone (Realtek Audio) with 2 inputs
+int idAudioDevice = 14; // 5 is Microphone (Realtek Audio) with 2 inputs
 //8 is U-phoria connected with 2 inputs.
 int idAudioInput = 0;
 /* Later at setup...
@@ -69,7 +69,7 @@ OscP5 oscP5Arena, oscP5Ableton;
 NetAddress myRemoteLocationArena, myRemoteLocationAbleton;
 
 // Define how many FFT bands to use (this needs to be a power of two)
-int bands = 512;//128;
+int bands = 1024;//512;//128;
 
 // Define a smoothing factor which determines how much the spectrums of consecutive
 // points in time should be combined to create a smoother visualisation of the spectrum.
@@ -114,7 +114,9 @@ int idVid = 0;
 int last_idVid = -1;
 float pctAux = 1;
 float pctLerp = 1;
+float pctCirclePosXLerp = 1;
 int last_maxIndex = 0;
+int last_idVideoSelected = 0;
 
 //Sound vars
 float scaleX = 1;
@@ -370,8 +372,19 @@ public void updatePctInteraction(int _maxFId) {
   float auxFreq = int(map(_maxFId, 0, bandsThreshold, 0, 1920));
   //idVid = findIdInteraction(_maxFId);
   pctAux = map(auxFreq%sizeWPerVideo, 0, sizeWPerVideo, 0, 1);
+  //if(pctAux < 1 && pctLerp)
+  int idVideoSelected = findIdInteraction(_maxFId);
   
-  pctLerp = lerp(pctLerp, pctAux, 0.01);
+  //do not lerp between vídeos
+  if(idVideoSelected == last_idVideoSelected){
+    pctLerp = lerp(pctLerp, pctAux, 0.05);//0.01
+  }else {
+    pctLerp = pctAux;
+    //println("not lerping!!!!!!!!!!!!!!!!!!!!!!!!"+ "idVideoSelected = "+idVideoSelected+" last_idVideoSelected = "+last_idVideoSelected);
+  }
+  
+  last_idVideoSelected = idVideoSelected;
+  
   //println("auxFreq = "+ auxFreq);
   //print("idVid->"+idVid);//TODO
   //println("pctAux->"+pctAux);
@@ -484,7 +497,7 @@ public void sendOSCArenaVideoData(int _idBandMaxFr) {
   
     if (_idBandMaxFr >0 && _idBandMaxFr < bands) {
   
-      float auxFreqAmplitude = map(getMaxValueFFT(_idBandMaxFr), 0, 0.2, 0, 0.75);// until 0.5 it's ok
+      float auxFreqAmplitude = map(getMaxValueFFT(_idBandMaxFr), 0, 0.2, 0, 1);// until 0.5 it's ok
       myMessageVideosAlpha.add(auxFreqAmplitude);
   
       /* send the message */
@@ -547,6 +560,8 @@ public void drawCustomFFTMode(int _mode, int _maxFreqIdBand) {
   if (_maxFreqIdBand >0 && _maxFreqIdBand < bands && bCircleDrawer) {
 
     int auxPosX = int(gapX*_maxFreqIdBand + _maxFreqIdBand*barWidth);
+    pctCirclePosXLerp = lerp(pctCirclePosXLerp, auxPosX, 0.05);
+    
     int auxPosY = int(getMaxValueFFT(_maxFreqIdBand)*height*scaleRectH);
 
     //draw maxFreq
