@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Composition name="Composition" uniqueId="1682597865805" numDecks="3" currentDeckIndex="0" numLayers="5" numColumns="11" compositionIsRelative="0">
+<Composition name="Composition" uniqueId="1682758708284" numDecks="3" currentDeckIndex="0" numLayers="5" numColumns="11" compositionIsRelative="0">
 	<versionInfo name="Resolume Arena" majorVersion="7" minorVersion="1" microVersion="0" revision="67353"/>
 	<CompositionInfo name="hidropoéticasVostell_EQ1" description="" width="1920" height="1080">
 		<DeckInfo name="Sine Wave" id="1679989921854" closed="0"/>
@@ -8,8 +8,8 @@
 	</CompositionInfo>
 	<Params name="Params">
 		<Param name="Name" T="STRING" default="" value="hidropoéticasVostell_EQ1"/>
-		<ParamRange name="Speed" T="DOUBLE" default="1" value="0.99999999999922550842">
-			<PhaseSourceStatic name="PhaseSourceStatic" phase="0.24999999999988731236"/>
+		<ParamRange name="Speed" T="DOUBLE" default="1" value="0.99999999999919964022">
+			<PhaseSourceStatic name="PhaseSourceStatic" phase="0.24999999999988342658"/>
 		</ParamRange>
 		<Param name="KeyboardShortcutPreset" T="STRING" default="" value="Default"/>
 		<Param name="MidiShortcutPreset" T="STRING" default="" value="Default"/>
@@ -45,8 +45,8 @@
 		</LayerView>
 		<AudioTrack name="AudioTrack">
 			<Params name="Params">
-				<ParamRange name="Volume" T="DOUBLE" default="0" value="-192">
-					<PhaseSourceStatic name="PhaseSourceStatic" phase="0"/>
+				<ParamRange name="Volume" T="DOUBLE" default="0" value="-179.95893783605978911">
+					<PhaseSourceStatic name="PhaseSourceStatic" phase="1.5848931924611141226e-05"/>
 				</ParamRange>
 			</Params>
 			<AudioEffectChain name="AudioEffectChain"/>
@@ -381,8 +381,8 @@
 						<DurationSource name="DurationSource" defaultDuration="216.21600000000000819s"/>
 						<PhaseSourceTransportTimeline name="PhaseSourceTransportTimeline" phase="0.2675027517275644362" defaultMillisecondsDuration="216216" defaultBeatsDuration="512">
 							<Params name="Params">
-								<ParamRange name="Speed" T="DOUBLE" default="1" value="0.99999999999919964022">
-									<PhaseSourceStatic name="PhaseSourceStatic" phase="0.24999999999988342658"/>
+								<ParamRange name="Speed" T="DOUBLE" default="1" value="0.99999999999917388305">
+									<PhaseSourceStatic name="PhaseSourceStatic" phase="0.2499999999998795408"/>
 								</ParamRange>
 								<ParamChoice name="PlayModeAway" T="INT32" default="0" value="1" storeChoices="0"/>
 							</Params>
@@ -394,7 +394,10 @@
 			</Transport>
 			<ClipView name="ClipView">
 				<FoldParams name="FoldParams">
+					<FoldState component="/clipproperties/cuepoints/" folded="1"/>
+					<FoldState component="/clipproperties/transport/" folded="0"/>
 					<FoldState component="/view/autopilot/" folded="0"/>
+					<FoldState component="/view/videotrackinfocomponent/tracksettingscomponent/videosettingscomponent/" folded="0"/>
 				</FoldParams>
 			</ClipView>
 			<AudioTrack name="AudioTrack">
@@ -437,7 +440,7 @@
 		</Clip>
 		<Clip name="Clip" uniqueId="1680168877520" layerIndex="1" columnIndex="0">
 			<PreloadData>
-				<VideoFile value="C:\Users\hidropc\Documents\develop\videos\VIDEO 1.mov"/>
+				<VideoFile value="C:\Users\hidropc\Documents\develop\hidropoeticas\videos\VIDEO 1.mov"/>
 			</PreloadData>
 			<Params name="Params">
 				<Param name="Name" T="STRING" default="VIDEO 1" value="VIDEO 1"/>
@@ -484,7 +487,7 @@
 				<PrimarySource>
 					<VideoSource name="VideoSource" width="1920" height="1080" type="VideoFormatReaderSource">
 						<RenderPass name="RenderPassChain" type="RenderPassChain" uniqueId="RenderPassChain" baseType="RenderPassChain"/>
-						<VideoFormatReaderSource fileName="C:\Users\hidropc\Documents\develop\videos\VIDEO 1.mov" LoadingThread="TTM_THREADED"/>
+						<VideoFormatReaderSource fileName="C:\Users\hidropc\Documents\develop\hidropoeticas\videos\VIDEO 1.mov" LoadingThread="TTM_THREADED"/>
 					</VideoSource>
 				</PrimarySource>
 			</VideoTrack>
@@ -500,8 +503,8 @@
 						<DurationSource name="DurationSource"/>
 						<PhaseSourceTransportTimeline name="PhaseSourceTransportTimeline" phase="0.14406995999833960287" defaultBeatsDuration="8">
 							<Params name="Params">
-								<ParamRange name="Speed" T="DOUBLE" default="1" value="0.99999999999930300199">
-									<PhaseSourceStatic name="PhaseSourceStatic" phase="0.2499999999998989697"/>
+								<ParamRange name="Speed" T="DOUBLE" default="1" value="0.99999999999927713379">
+									<PhaseSourceStatic name="PhaseSourceStatic" phase="0.24999999999989508392"/>
 								</ParamRange>
 							</Params>
 							<Beats_double name="Beats_double" mode="0" numDetectedBeats="-1" numManualBeats="8" detectedTempo="-1" manualTempo="120" detected="0"/>
@@ -518,11 +521,11 @@
 			</ClipView>
 			<VideoTrack name="VideoTrack" manualDuration="0">
 				<Params name="Params">
-					<ParamRange name="Width" T="DOUBLE" default="1920" value="1920">
-						<PhaseSourceStatic name="PhaseSourceStatic" phase="0.05859375"/>
+					<ParamRange name="Width" T="DOUBLE" default="640" value="640">
+						<PhaseSourceStatic name="PhaseSourceStatic" phase="0.01953125"/>
 					</ParamRange>
-					<ParamRange name="Height" T="DOUBLE" default="1050" value="1050">
-						<PhaseSourceStatic name="PhaseSourceStatic" phase="0.03204345703125"/>
+					<ParamRange name="Height" T="DOUBLE" default="480" value="480">
+						<PhaseSourceStatic name="PhaseSourceStatic" phase="0.0146484375"/>
 					</ParamRange>
 					<Param name="RScale" T="BOOL" default="1" value="1"/>
 					<Param name="GScale" T="BOOL" default="1" value="1"/>
@@ -551,7 +554,7 @@
 				</RenderPass>
 				<ChoosableMixer name="Blend"/>
 				<PrimarySource>
-					<VideoSource storage="0" name="VideoSource" width="1920" height="1050" type="SpoutVideoSource">
+					<VideoSource storage="0" name="VideoSource" width="640" height="480" type="SpoutVideoSource">
 						<SpoutInfo serverName="Spout Processing Sender"/>
 						<RenderPass name="RenderPassChain" type="RenderPassChain" uniqueId="RenderPassChain" baseType="RenderPassChain"/>
 					</VideoSource>
@@ -625,11 +628,11 @@
 			</ClipView>
 			<VideoTrack name="VideoTrack" manualDuration="0">
 				<Params name="Params">
-					<ParamRange name="Width" T="DOUBLE" default="1920" value="1920">
-						<PhaseSourceStatic name="PhaseSourceStatic" phase="0.05859375"/>
+					<ParamRange name="Width" T="DOUBLE" default="640" value="640">
+						<PhaseSourceStatic name="PhaseSourceStatic" phase="0.01953125"/>
 					</ParamRange>
-					<ParamRange name="Height" T="DOUBLE" default="1050" value="1050">
-						<PhaseSourceStatic name="PhaseSourceStatic" phase="0.03204345703125"/>
+					<ParamRange name="Height" T="DOUBLE" default="480" value="480">
+						<PhaseSourceStatic name="PhaseSourceStatic" phase="0.0146484375"/>
 					</ParamRange>
 					<Param name="RScale" T="BOOL" default="1" value="1"/>
 					<Param name="GScale" T="BOOL" default="1" value="1"/>
@@ -643,7 +646,7 @@
 				</RenderPass>
 				<ChoosableMixer name="Blend"/>
 				<PrimarySource>
-					<VideoSource storage="0" name="VideoSource" width="1920" height="1050" type="SpoutVideoSource">
+					<VideoSource storage="0" name="VideoSource" width="640" height="480" type="SpoutVideoSource">
 						<SpoutInfo serverName="Spout weather"/>
 						<RenderPass name="RenderPassChain" type="RenderPassChain" uniqueId="RenderPassChain" baseType="RenderPassChain"/>
 					</VideoSource>
@@ -665,8 +668,8 @@
 						<DurationSource name="DurationSource" defaultDuration="216.21600000000000819s"/>
 						<PhaseSourceTransportTimeline name="PhaseSourceTransportTimeline" phase="0.053063641604867005375" defaultMillisecondsDuration="216216" defaultBeatsDuration="512">
 							<Params name="Params">
-								<ParamRange name="Speed" T="DOUBLE" default="1" value="0.99999999999917388305">
-									<PhaseSourceStatic name="PhaseSourceStatic" phase="0.2499999999998795408"/>
+								<ParamRange name="Speed" T="DOUBLE" default="1" value="0.99999999999914801485">
+									<PhaseSourceStatic name="PhaseSourceStatic" phase="0.24999999999987565502"/>
 								</ParamRange>
 								<ParamChoice name="PlayModeAway" T="INT32" default="0" value="1" storeChoices="0"/>
 							</Params>
@@ -683,8 +686,8 @@
 			</ClipView>
 			<AudioTrack name="AudioTrack">
 				<Params name="Params">
-					<ParamRange name="Volume" T="DOUBLE" default="0" value="0.00013733465663081148838">
-						<PhaseSourceStatic name="PhaseSourceStatic" phase="0.50118723362727224391"/>
+					<ParamRange name="Volume" T="DOUBLE" default="0" value="0.00027466713668306648108">
+						<PhaseSourceStatic name="PhaseSourceStatic" phase="0.50119119583791393868"/>
 					</ParamRange>
 				</Params>
 				<AudioEffectChain name="AudioEffectChain"/>
@@ -726,7 +729,7 @@
 		</Clip>
 		<Clip name="Clip" uniqueId="1680168877523" layerIndex="1" columnIndex="1">
 			<PreloadData>
-				<VideoFile value="C:\Users\hidropc\Documents\develop\videos\VIDEO 2.mov"/>
+				<VideoFile value="C:\Users\hidropc\Documents\develop\hidropoeticas\videos\VIDEO 2.mov"/>
 			</PreloadData>
 			<Params name="Params">
 				<Param name="Name" T="STRING" default="VIDEO 2" value="VIDEO 2"/>
@@ -773,7 +776,7 @@
 				<PrimarySource>
 					<VideoSource name="VideoSource" width="1920" height="1080" type="VideoFormatReaderSource">
 						<RenderPass name="RenderPassChain" type="RenderPassChain" uniqueId="RenderPassChain" baseType="RenderPassChain"/>
-						<VideoFormatReaderSource fileName="C:\Users\hidropc\Documents\develop\videos\VIDEO 2.mov" LoadingThread="TTM_THREADED"/>
+						<VideoFormatReaderSource fileName="C:\Users\hidropc\Documents\develop\hidropoeticas\videos\VIDEO 2.mov" LoadingThread="TTM_THREADED"/>
 					</VideoSource>
 				</PrimarySource>
 			</VideoTrack>
@@ -789,8 +792,8 @@
 						<DurationSource name="DurationSource"/>
 						<PhaseSourceTransportTimeline name="PhaseSourceTransportTimeline" phase="0.0041777600000086380361" defaultBeatsDuration="8">
 							<Params name="Params">
-								<ParamRange name="Speed" T="DOUBLE" default="1" value="0.99999999999930300199">
-									<PhaseSourceStatic name="PhaseSourceStatic" phase="0.2499999999998989697"/>
+								<ParamRange name="Speed" T="DOUBLE" default="1" value="0.99999999999927713379">
+									<PhaseSourceStatic name="PhaseSourceStatic" phase="0.24999999999989508392"/>
 								</ParamRange>
 							</Params>
 							<Beats_double name="Beats_double" mode="0" numDetectedBeats="-1" numManualBeats="8" detectedTempo="-1" manualTempo="120" detected="0"/>
@@ -807,11 +810,11 @@
 			</ClipView>
 			<VideoTrack name="VideoTrack" manualDuration="0">
 				<Params name="Params">
-					<ParamRange name="Width" T="DOUBLE" default="1920" value="1920">
-						<PhaseSourceStatic name="PhaseSourceStatic" phase="0.05859375"/>
+					<ParamRange name="Width" T="DOUBLE" default="640" value="640">
+						<PhaseSourceStatic name="PhaseSourceStatic" phase="0.01953125"/>
 					</ParamRange>
-					<ParamRange name="Height" T="DOUBLE" default="1050" value="1050">
-						<PhaseSourceStatic name="PhaseSourceStatic" phase="0.03204345703125"/>
+					<ParamRange name="Height" T="DOUBLE" default="480" value="480">
+						<PhaseSourceStatic name="PhaseSourceStatic" phase="0.0146484375"/>
 					</ParamRange>
 					<Param name="RScale" T="BOOL" default="1" value="1"/>
 					<Param name="GScale" T="BOOL" default="1" value="1"/>
@@ -840,7 +843,7 @@
 				</RenderPass>
 				<ChoosableMixer name="Blend"/>
 				<PrimarySource>
-					<VideoSource storage="0" name="VideoSource" width="1920" height="1050" type="SpoutVideoSource">
+					<VideoSource storage="0" name="VideoSource" width="640" height="480" type="SpoutVideoSource">
 						<SpoutInfo serverName="Spout Processing Sender"/>
 						<RenderPass name="RenderPassChain" type="RenderPassChain" uniqueId="RenderPassChain" baseType="RenderPassChain"/>
 					</VideoSource>
@@ -904,8 +907,8 @@
 						<DurationSource name="DurationSource"/>
 						<PhaseSourceTransportTimeline name="PhaseSourceTransportTimeline" phase="0.004177760000009501061" defaultBeatsDuration="8">
 							<Params name="Params">
-								<ParamRange name="Speed" T="DOUBLE" default="1" value="0.99999999999950950347">
-									<PhaseSourceStatic name="PhaseSourceStatic" phase="0.24999999999993005595"/>
+								<ParamRange name="Speed" T="DOUBLE" default="1" value="0.99999999999948363527">
+									<PhaseSourceStatic name="PhaseSourceStatic" phase="0.24999999999992617017"/>
 								</ParamRange>
 							</Params>
 							<Beats_double name="Beats_double" mode="0" numDetectedBeats="-1" numManualBeats="8" detectedTempo="-1" manualTempo="120" detected="0"/>
@@ -919,11 +922,11 @@
 			</ClipView>
 			<VideoTrack name="VideoTrack" manualDuration="0">
 				<Params name="Params">
-					<ParamRange name="Width" T="DOUBLE" default="1920" value="1920">
-						<PhaseSourceStatic name="PhaseSourceStatic" phase="0.05859375"/>
+					<ParamRange name="Width" T="DOUBLE" default="640" value="640">
+						<PhaseSourceStatic name="PhaseSourceStatic" phase="0.01953125"/>
 					</ParamRange>
-					<ParamRange name="Height" T="DOUBLE" default="1050" value="1050">
-						<PhaseSourceStatic name="PhaseSourceStatic" phase="0.03204345703125"/>
+					<ParamRange name="Height" T="DOUBLE" default="480" value="480">
+						<PhaseSourceStatic name="PhaseSourceStatic" phase="0.0146484375"/>
 					</ParamRange>
 					<Param name="RScale" T="BOOL" default="1" value="1"/>
 					<Param name="GScale" T="BOOL" default="1" value="1"/>
@@ -937,7 +940,7 @@
 				</RenderPass>
 				<ChoosableMixer name="Blend"/>
 				<PrimarySource>
-					<VideoSource storage="0" name="VideoSource" width="1920" height="1050" type="SpoutVideoSource">
+					<VideoSource storage="0" name="VideoSource" width="640" height="480" type="SpoutVideoSource">
 						<SpoutInfo serverName="Spout weather"/>
 						<RenderPass name="RenderPassChain" type="RenderPassChain" uniqueId="RenderPassChain" baseType="RenderPassChain"/>
 					</VideoSource>
@@ -959,8 +962,8 @@
 						<DurationSource name="DurationSource" defaultDuration="216.21600000000000819s"/>
 						<PhaseSourceTransportTimeline name="PhaseSourceTransportTimeline" phase="0.032723931161241490151" defaultMillisecondsDuration="216216" defaultBeatsDuration="512">
 							<Params name="Params">
-								<ParamRange name="Speed" T="DOUBLE" default="1" value="0.99999999999917388305">
-									<PhaseSourceStatic name="PhaseSourceStatic" phase="0.2499999999998795408"/>
+								<ParamRange name="Speed" T="DOUBLE" default="1" value="0.99999999999914801485">
+									<PhaseSourceStatic name="PhaseSourceStatic" phase="0.24999999999987565502"/>
 								</ParamRange>
 								<ParamChoice name="PlayModeAway" T="INT32" default="0" value="1" storeChoices="0"/>
 							</Params>
@@ -977,8 +980,8 @@
 			</ClipView>
 			<AudioTrack name="AudioTrack">
 				<Params name="Params">
-					<ParamRange name="Volume" T="DOUBLE" default="0" value="0.00013733465663081148838">
-						<PhaseSourceStatic name="PhaseSourceStatic" phase="0.50118723362727224391"/>
+					<ParamRange name="Volume" T="DOUBLE" default="0" value="0.00027466713668306648108">
+						<PhaseSourceStatic name="PhaseSourceStatic" phase="0.50119119583791393868"/>
 					</ParamRange>
 				</Params>
 				<AudioEffectChain name="AudioEffectChain"/>
@@ -1020,7 +1023,7 @@
 		</Clip>
 		<Clip name="Clip" uniqueId="1680168877524" layerIndex="1" columnIndex="2">
 			<PreloadData>
-				<VideoFile value="C:\Users\hidropc\Documents\develop\videos\VIDEO 3.mov"/>
+				<VideoFile value="C:\Users\hidropc\Documents\develop\hidropoeticas\videos\VIDEO 3.mov"/>
 			</PreloadData>
 			<Params name="Params">
 				<Param name="Name" T="STRING" default="VIDEO 3" value="VIDEO 3"/>
@@ -1067,7 +1070,7 @@
 				<PrimarySource>
 					<VideoSource name="VideoSource" width="1920" height="1080" type="VideoFormatReaderSource">
 						<RenderPass name="RenderPassChain" type="RenderPassChain" uniqueId="RenderPassChain" baseType="RenderPassChain"/>
-						<VideoFormatReaderSource fileName="C:\Users\hidropc\Documents\develop\videos\VIDEO 3.mov" LoadingThread="TTM_THREADED"/>
+						<VideoFormatReaderSource fileName="C:\Users\hidropc\Documents\develop\hidropoeticas\videos\VIDEO 3.mov" LoadingThread="TTM_THREADED"/>
 					</VideoSource>
 				</PrimarySource>
 			</VideoTrack>
@@ -1083,8 +1086,8 @@
 						<DurationSource name="DurationSource"/>
 						<PhaseSourceTransportTimeline name="PhaseSourceTransportTimeline" phase="0.0046029399999816481698" defaultBeatsDuration="8">
 							<Params name="Params">
-								<ParamRange name="Speed" T="DOUBLE" default="1" value="0.99999999999930300199">
-									<PhaseSourceStatic name="PhaseSourceStatic" phase="0.2499999999998989697"/>
+								<ParamRange name="Speed" T="DOUBLE" default="1" value="0.99999999999927713379">
+									<PhaseSourceStatic name="PhaseSourceStatic" phase="0.24999999999989508392"/>
 								</ParamRange>
 							</Params>
 							<Beats_double name="Beats_double" mode="0" numDetectedBeats="-1" numManualBeats="8" detectedTempo="-1" manualTempo="120" detected="0"/>
@@ -1101,11 +1104,11 @@
 			</ClipView>
 			<VideoTrack name="VideoTrack" manualDuration="0">
 				<Params name="Params">
-					<ParamRange name="Width" T="DOUBLE" default="1920" value="1920">
-						<PhaseSourceStatic name="PhaseSourceStatic" phase="0.05859375"/>
+					<ParamRange name="Width" T="DOUBLE" default="640" value="640">
+						<PhaseSourceStatic name="PhaseSourceStatic" phase="0.01953125"/>
 					</ParamRange>
-					<ParamRange name="Height" T="DOUBLE" default="1050" value="1050">
-						<PhaseSourceStatic name="PhaseSourceStatic" phase="0.03204345703125"/>
+					<ParamRange name="Height" T="DOUBLE" default="480" value="480">
+						<PhaseSourceStatic name="PhaseSourceStatic" phase="0.0146484375"/>
 					</ParamRange>
 					<Param name="RScale" T="BOOL" default="1" value="1"/>
 					<Param name="GScale" T="BOOL" default="1" value="1"/>
@@ -1134,7 +1137,7 @@
 				</RenderPass>
 				<ChoosableMixer name="Blend"/>
 				<PrimarySource>
-					<VideoSource storage="0" name="VideoSource" width="1920" height="1050" type="SpoutVideoSource">
+					<VideoSource storage="0" name="VideoSource" width="640" height="480" type="SpoutVideoSource">
 						<SpoutInfo serverName="Spout Processing Sender"/>
 						<RenderPass name="RenderPassChain" type="RenderPassChain" uniqueId="RenderPassChain" baseType="RenderPassChain"/>
 					</VideoSource>
@@ -1208,11 +1211,11 @@
 			</ClipView>
 			<VideoTrack name="VideoTrack" manualDuration="0">
 				<Params name="Params">
-					<ParamRange name="Width" T="DOUBLE" default="1920" value="1920">
-						<PhaseSourceStatic name="PhaseSourceStatic" phase="0.05859375"/>
+					<ParamRange name="Width" T="DOUBLE" default="640" value="640">
+						<PhaseSourceStatic name="PhaseSourceStatic" phase="0.01953125"/>
 					</ParamRange>
-					<ParamRange name="Height" T="DOUBLE" default="1050" value="1050">
-						<PhaseSourceStatic name="PhaseSourceStatic" phase="0.03204345703125"/>
+					<ParamRange name="Height" T="DOUBLE" default="480" value="480">
+						<PhaseSourceStatic name="PhaseSourceStatic" phase="0.0146484375"/>
 					</ParamRange>
 					<Param name="RScale" T="BOOL" default="1" value="1"/>
 					<Param name="GScale" T="BOOL" default="1" value="1"/>
@@ -1226,7 +1229,7 @@
 				</RenderPass>
 				<ChoosableMixer name="Blend"/>
 				<PrimarySource>
-					<VideoSource storage="0" name="VideoSource" width="1920" height="1050" type="SpoutVideoSource">
+					<VideoSource storage="0" name="VideoSource" width="640" height="480" type="SpoutVideoSource">
 						<SpoutInfo serverName="Spout weather"/>
 						<RenderPass name="RenderPassChain" type="RenderPassChain" uniqueId="RenderPassChain" baseType="RenderPassChain"/>
 					</VideoSource>
@@ -1248,8 +1251,8 @@
 						<DurationSource name="DurationSource" defaultDuration="216.21600000000000819s"/>
 						<PhaseSourceTransportTimeline name="PhaseSourceTransportTimeline" phase="0.034153346653139300682" defaultMillisecondsDuration="216216" defaultBeatsDuration="512">
 							<Params name="Params">
-								<ParamRange name="Speed" T="DOUBLE" default="1" value="0.99999999999917388305">
-									<PhaseSourceStatic name="PhaseSourceStatic" phase="0.2499999999998795408"/>
+								<ParamRange name="Speed" T="DOUBLE" default="1" value="0.99999999999914801485">
+									<PhaseSourceStatic name="PhaseSourceStatic" phase="0.24999999999987565502"/>
 								</ParamRange>
 								<ParamChoice name="PlayModeAway" T="INT32" default="0" value="1" storeChoices="0"/>
 							</Params>
@@ -1266,8 +1269,8 @@
 			</ClipView>
 			<AudioTrack name="AudioTrack">
 				<Params name="Params">
-					<ParamRange name="Volume" T="DOUBLE" default="0" value="0.00013733465663081148838">
-						<PhaseSourceStatic name="PhaseSourceStatic" phase="0.50118723362727224391"/>
+					<ParamRange name="Volume" T="DOUBLE" default="0" value="0.00027466713668306648108">
+						<PhaseSourceStatic name="PhaseSourceStatic" phase="0.50119119583791393868"/>
 					</ParamRange>
 				</Params>
 				<AudioEffectChain name="AudioEffectChain"/>
@@ -1309,7 +1312,7 @@
 		</Clip>
 		<Clip name="Clip" uniqueId="1680168877525" layerIndex="1" columnIndex="3">
 			<PreloadData>
-				<VideoFile value="C:\Users\hidropc\Documents\develop\videos\VIDEO 4.mov"/>
+				<VideoFile value="C:\Users\hidropc\Documents\develop\hidropoeticas\videos\VIDEO 4.mov"/>
 			</PreloadData>
 			<Params name="Params">
 				<Param name="Name" T="STRING" default="VIDEO 4" value="VIDEO 4"/>
@@ -1356,7 +1359,7 @@
 				<PrimarySource>
 					<VideoSource name="VideoSource" width="1920" height="1080" type="VideoFormatReaderSource">
 						<RenderPass name="RenderPassChain" type="RenderPassChain" uniqueId="RenderPassChain" baseType="RenderPassChain"/>
-						<VideoFormatReaderSource fileName="C:\Users\hidropc\Documents\develop\videos\VIDEO 4.mov" LoadingThread="TTM_THREADED"/>
+						<VideoFormatReaderSource fileName="C:\Users\hidropc\Documents\develop\hidropoeticas\videos\VIDEO 4.mov" LoadingThread="TTM_THREADED"/>
 					</VideoSource>
 				</PrimarySource>
 			</VideoTrack>
@@ -1372,8 +1375,8 @@
 						<DurationSource name="DurationSource"/>
 						<PhaseSourceTransportTimeline name="PhaseSourceTransportTimeline" phase="0.0042030999999898253916" defaultBeatsDuration="8">
 							<Params name="Params">
-								<ParamRange name="Speed" T="DOUBLE" default="1" value="0.99999999999930300199">
-									<PhaseSourceStatic name="PhaseSourceStatic" phase="0.2499999999998989697"/>
+								<ParamRange name="Speed" T="DOUBLE" default="1" value="0.99999999999927713379">
+									<PhaseSourceStatic name="PhaseSourceStatic" phase="0.24999999999989508392"/>
 								</ParamRange>
 							</Params>
 							<Beats_double name="Beats_double" mode="0" numDetectedBeats="-1" numManualBeats="8" detectedTempo="-1" manualTempo="120" detected="0"/>
@@ -1390,11 +1393,11 @@
 			</ClipView>
 			<VideoTrack name="VideoTrack" manualDuration="0">
 				<Params name="Params">
-					<ParamRange name="Width" T="DOUBLE" default="1920" value="1920">
-						<PhaseSourceStatic name="PhaseSourceStatic" phase="0.05859375"/>
+					<ParamRange name="Width" T="DOUBLE" default="640" value="640">
+						<PhaseSourceStatic name="PhaseSourceStatic" phase="0.01953125"/>
 					</ParamRange>
-					<ParamRange name="Height" T="DOUBLE" default="1050" value="1050">
-						<PhaseSourceStatic name="PhaseSourceStatic" phase="0.03204345703125"/>
+					<ParamRange name="Height" T="DOUBLE" default="480" value="480">
+						<PhaseSourceStatic name="PhaseSourceStatic" phase="0.0146484375"/>
 					</ParamRange>
 					<Param name="RScale" T="BOOL" default="1" value="1"/>
 					<Param name="GScale" T="BOOL" default="1" value="1"/>
@@ -1423,7 +1426,7 @@
 				</RenderPass>
 				<ChoosableMixer name="Blend"/>
 				<PrimarySource>
-					<VideoSource storage="0" name="VideoSource" width="1920" height="1050" type="SpoutVideoSource">
+					<VideoSource storage="0" name="VideoSource" width="640" height="480" type="SpoutVideoSource">
 						<SpoutInfo serverName="Spout Processing Sender"/>
 						<RenderPass name="RenderPassChain" type="RenderPassChain" uniqueId="RenderPassChain" baseType="RenderPassChain"/>
 					</VideoSource>
@@ -1497,11 +1500,11 @@
 			</ClipView>
 			<VideoTrack name="VideoTrack" manualDuration="0">
 				<Params name="Params">
-					<ParamRange name="Width" T="DOUBLE" default="1920" value="1920">
-						<PhaseSourceStatic name="PhaseSourceStatic" phase="0.05859375"/>
+					<ParamRange name="Width" T="DOUBLE" default="640" value="640">
+						<PhaseSourceStatic name="PhaseSourceStatic" phase="0.01953125"/>
 					</ParamRange>
-					<ParamRange name="Height" T="DOUBLE" default="1050" value="1050">
-						<PhaseSourceStatic name="PhaseSourceStatic" phase="0.03204345703125"/>
+					<ParamRange name="Height" T="DOUBLE" default="480" value="480">
+						<PhaseSourceStatic name="PhaseSourceStatic" phase="0.0146484375"/>
 					</ParamRange>
 					<Param name="RScale" T="BOOL" default="1" value="1"/>
 					<Param name="GScale" T="BOOL" default="1" value="1"/>
@@ -1515,7 +1518,7 @@
 				</RenderPass>
 				<ChoosableMixer name="Blend"/>
 				<PrimarySource>
-					<VideoSource storage="0" name="VideoSource" width="1920" height="1050" type="SpoutVideoSource">
+					<VideoSource storage="0" name="VideoSource" width="640" height="480" type="SpoutVideoSource">
 						<SpoutInfo serverName="Spout weather"/>
 						<RenderPass name="RenderPassChain" type="RenderPassChain" uniqueId="RenderPassChain" baseType="RenderPassChain"/>
 					</VideoSource>
@@ -1537,8 +1540,8 @@
 						<DurationSource name="DurationSource" defaultDuration="216.21600000000000819s"/>
 						<PhaseSourceTransportTimeline name="PhaseSourceTransportTimeline" phase="0.048475058891341051004" defaultMillisecondsDuration="216216" defaultBeatsDuration="512">
 							<Params name="Params">
-								<ParamRange name="Speed" T="DOUBLE" default="1" value="0.99999999999917388305">
-									<PhaseSourceStatic name="PhaseSourceStatic" phase="0.2499999999998795408"/>
+								<ParamRange name="Speed" T="DOUBLE" default="1" value="0.99999999999914801485">
+									<PhaseSourceStatic name="PhaseSourceStatic" phase="0.24999999999987565502"/>
 								</ParamRange>
 								<ParamChoice name="PlayModeAway" T="INT32" default="0" value="1" storeChoices="0"/>
 							</Params>
@@ -1555,8 +1558,8 @@
 			</ClipView>
 			<AudioTrack name="AudioTrack">
 				<Params name="Params">
-					<ParamRange name="Volume" T="DOUBLE" default="0" value="0.00013733465663081148838">
-						<PhaseSourceStatic name="PhaseSourceStatic" phase="0.50118723362727224391"/>
+					<ParamRange name="Volume" T="DOUBLE" default="0" value="0.00027466713668306648108">
+						<PhaseSourceStatic name="PhaseSourceStatic" phase="0.50119119583791393868"/>
 					</ParamRange>
 				</Params>
 				<AudioEffectChain name="AudioEffectChain"/>
@@ -1598,7 +1601,7 @@
 		</Clip>
 		<Clip name="Clip" uniqueId="1680168877526" layerIndex="1" columnIndex="4">
 			<PreloadData>
-				<VideoFile value="C:\Users\hidropc\Documents\develop\videos\VIDEO 5.mov"/>
+				<VideoFile value="C:\Users\hidropc\Documents\develop\hidropoeticas\videos\VIDEO 5.mov"/>
 			</PreloadData>
 			<Params name="Params">
 				<Param name="Name" T="STRING" default="VIDEO 5" value="VIDEO 5"/>
@@ -1607,8 +1610,8 @@
 			<Transport name="Transport">
 				<Params name="Params">
 					<ParamRange name="Position" T="DOUBLE" default="0" value="9746.15875244140625">
-						<DurationSource name="DurationSource" defaultDuration="29.440000000000001279s"/>
-						<PhaseSourceTransportTimeline name="PhaseSourceTransportTimeline" phase="0.33105158805847167969" defaultMillisecondsDuration="29440" defaultBeatsDuration="64">
+						<DurationSource name="DurationSource" defaultDuration="35s"/>
+						<PhaseSourceTransportTimeline name="PhaseSourceTransportTimeline" phase="0.27846167864118304136" defaultMillisecondsDuration="35000" defaultBeatsDuration="64">
 							<Params name="Params">
 								<ParamChoice name="PlayDirection" T="INT32" default="2" value="1" storeChoices="0"/>
 								<ParamChoice name="PlayMode" T="INT32" default="0" value="4" storeChoices="0"/>
@@ -1616,7 +1619,7 @@
 							</Params>
 							<Beats_double name="Beats_double" mode="0" numDetectedBeats="-1" numManualBeats="64" detectedTempo="-1" manualTempo="120" detected="0"/>
 						</PhaseSourceTransportTimeline>
-						<ValueRange name="minMax" min="0" max="29440"/>
+						<ValueRange name="minMax" min="0" max="35000"/>
 					</ParamRange>
 				</Params>
 			</Transport>
@@ -1645,7 +1648,7 @@
 				<PrimarySource>
 					<VideoSource name="VideoSource" width="1920" height="1080" type="VideoFormatReaderSource">
 						<RenderPass name="RenderPassChain" type="RenderPassChain" uniqueId="RenderPassChain" baseType="RenderPassChain"/>
-						<VideoFormatReaderSource fileName="C:\Users\hidropc\Documents\develop\videos\VIDEO 5.mov" LoadingThread="TTM_THREADED"/>
+						<VideoFormatReaderSource fileName="C:\Users\hidropc\Documents\develop\hidropoeticas\videos\VIDEO 5.mov" LoadingThread="TTM_THREADED"/>
 					</VideoSource>
 				</PrimarySource>
 			</VideoTrack>
@@ -1661,8 +1664,8 @@
 						<DurationSource name="DurationSource"/>
 						<PhaseSourceTransportTimeline name="PhaseSourceTransportTimeline" phase="0.0046009000000011715872" defaultBeatsDuration="8">
 							<Params name="Params">
-								<ParamRange name="Speed" T="DOUBLE" default="1" value="0.99999999999930300199">
-									<PhaseSourceStatic name="PhaseSourceStatic" phase="0.2499999999998989697"/>
+								<ParamRange name="Speed" T="DOUBLE" default="1" value="0.99999999999927713379">
+									<PhaseSourceStatic name="PhaseSourceStatic" phase="0.24999999999989508392"/>
 								</ParamRange>
 							</Params>
 							<Beats_double name="Beats_double" mode="0" numDetectedBeats="-1" numManualBeats="8" detectedTempo="-1" manualTempo="120" detected="0"/>
@@ -1679,11 +1682,11 @@
 			</ClipView>
 			<VideoTrack name="VideoTrack" manualDuration="0">
 				<Params name="Params">
-					<ParamRange name="Width" T="DOUBLE" default="1920" value="1920">
-						<PhaseSourceStatic name="PhaseSourceStatic" phase="0.05859375"/>
+					<ParamRange name="Width" T="DOUBLE" default="640" value="640">
+						<PhaseSourceStatic name="PhaseSourceStatic" phase="0.01953125"/>
 					</ParamRange>
-					<ParamRange name="Height" T="DOUBLE" default="1050" value="1050">
-						<PhaseSourceStatic name="PhaseSourceStatic" phase="0.03204345703125"/>
+					<ParamRange name="Height" T="DOUBLE" default="480" value="480">
+						<PhaseSourceStatic name="PhaseSourceStatic" phase="0.0146484375"/>
 					</ParamRange>
 					<Param name="RScale" T="BOOL" default="1" value="1"/>
 					<Param name="GScale" T="BOOL" default="1" value="1"/>
@@ -1712,7 +1715,7 @@
 				</RenderPass>
 				<ChoosableMixer name="Blend"/>
 				<PrimarySource>
-					<VideoSource storage="0" name="VideoSource" width="1920" height="1050" type="SpoutVideoSource">
+					<VideoSource storage="0" name="VideoSource" width="640" height="480" type="SpoutVideoSource">
 						<SpoutInfo serverName="Spout Processing Sender"/>
 						<RenderPass name="RenderPassChain" type="RenderPassChain" uniqueId="RenderPassChain" baseType="RenderPassChain"/>
 					</VideoSource>
@@ -1786,11 +1789,11 @@
 			</ClipView>
 			<VideoTrack name="VideoTrack" manualDuration="0">
 				<Params name="Params">
-					<ParamRange name="Width" T="DOUBLE" default="1920" value="1920">
-						<PhaseSourceStatic name="PhaseSourceStatic" phase="0.05859375"/>
+					<ParamRange name="Width" T="DOUBLE" default="640" value="640">
+						<PhaseSourceStatic name="PhaseSourceStatic" phase="0.01953125"/>
 					</ParamRange>
-					<ParamRange name="Height" T="DOUBLE" default="1050" value="1050">
-						<PhaseSourceStatic name="PhaseSourceStatic" phase="0.03204345703125"/>
+					<ParamRange name="Height" T="DOUBLE" default="480" value="480">
+						<PhaseSourceStatic name="PhaseSourceStatic" phase="0.0146484375"/>
 					</ParamRange>
 					<Param name="RScale" T="BOOL" default="1" value="1"/>
 					<Param name="GScale" T="BOOL" default="1" value="1"/>
@@ -1804,7 +1807,7 @@
 				</RenderPass>
 				<ChoosableMixer name="Blend"/>
 				<PrimarySource>
-					<VideoSource storage="0" name="VideoSource" width="1920" height="1050" type="SpoutVideoSource">
+					<VideoSource storage="0" name="VideoSource" width="640" height="480" type="SpoutVideoSource">
 						<SpoutInfo serverName="Spout weather"/>
 						<RenderPass name="RenderPassChain" type="RenderPassChain" uniqueId="RenderPassChain" baseType="RenderPassChain"/>
 					</VideoSource>
@@ -1826,8 +1829,8 @@
 						<DurationSource name="DurationSource" defaultDuration="216.21600000000000819s"/>
 						<PhaseSourceTransportTimeline name="PhaseSourceTransportTimeline" phase="0.031057869599367203539" defaultMillisecondsDuration="216216" defaultBeatsDuration="512">
 							<Params name="Params">
-								<ParamRange name="Speed" T="DOUBLE" default="1" value="0.99999999999917388305">
-									<PhaseSourceStatic name="PhaseSourceStatic" phase="0.2499999999998795408"/>
+								<ParamRange name="Speed" T="DOUBLE" default="1" value="0.99999999999914801485">
+									<PhaseSourceStatic name="PhaseSourceStatic" phase="0.24999999999987565502"/>
 								</ParamRange>
 								<ParamChoice name="PlayModeAway" T="INT32" default="0" value="1" storeChoices="0"/>
 							</Params>
@@ -1844,8 +1847,8 @@
 			</ClipView>
 			<AudioTrack name="AudioTrack">
 				<Params name="Params">
-					<ParamRange name="Volume" T="DOUBLE" default="0" value="0.00013733465663081148838">
-						<PhaseSourceStatic name="PhaseSourceStatic" phase="0.50118723362727224391"/>
+					<ParamRange name="Volume" T="DOUBLE" default="0" value="0.00027466713668306648108">
+						<PhaseSourceStatic name="PhaseSourceStatic" phase="0.50119119583791393868"/>
 					</ParamRange>
 				</Params>
 				<AudioEffectChain name="AudioEffectChain"/>
@@ -1887,7 +1890,7 @@
 		</Clip>
 		<Clip name="Clip" uniqueId="1680168877527" layerIndex="1" columnIndex="5">
 			<PreloadData>
-				<VideoFile value="C:\Users\hidropc\Documents\develop\videos\VIDEO 6.mov"/>
+				<VideoFile value="C:\Users\hidropc\Documents\develop\hidropoeticas\videos\VIDEO 6.mov"/>
 			</PreloadData>
 			<Params name="Params">
 				<Param name="Name" T="STRING" default="VIDEO 6" value="VIDEO 6"/>
@@ -1934,7 +1937,7 @@
 				<PrimarySource>
 					<VideoSource name="VideoSource" width="1920" height="1080" type="VideoFormatReaderSource">
 						<RenderPass name="RenderPassChain" type="RenderPassChain" uniqueId="RenderPassChain" baseType="RenderPassChain"/>
-						<VideoFormatReaderSource fileName="C:\Users\hidropc\Documents\develop\videos\VIDEO 6.mov" LoadingThread="TTM_THREADED"/>
+						<VideoFormatReaderSource fileName="C:\Users\hidropc\Documents\develop\hidropoeticas\videos\VIDEO 6.mov" LoadingThread="TTM_THREADED"/>
 					</VideoSource>
 				</PrimarySource>
 			</VideoTrack>
@@ -1950,8 +1953,8 @@
 						<DurationSource name="DurationSource"/>
 						<PhaseSourceTransportTimeline name="PhaseSourceTransportTimeline" phase="0.0057989800000013769568" defaultBeatsDuration="8">
 							<Params name="Params">
-								<ParamRange name="Speed" T="DOUBLE" default="1" value="0.99999999999930300199">
-									<PhaseSourceStatic name="PhaseSourceStatic" phase="0.2499999999998989697"/>
+								<ParamRange name="Speed" T="DOUBLE" default="1" value="0.99999999999927713379">
+									<PhaseSourceStatic name="PhaseSourceStatic" phase="0.24999999999989508392"/>
 								</ParamRange>
 							</Params>
 							<Beats_double name="Beats_double" mode="0" numDetectedBeats="-1" numManualBeats="8" detectedTempo="-1" manualTempo="120" detected="0"/>
@@ -1968,11 +1971,11 @@
 			</ClipView>
 			<VideoTrack name="VideoTrack" manualDuration="0">
 				<Params name="Params">
-					<ParamRange name="Width" T="DOUBLE" default="1920" value="1920">
-						<PhaseSourceStatic name="PhaseSourceStatic" phase="0.05859375"/>
+					<ParamRange name="Width" T="DOUBLE" default="640" value="640">
+						<PhaseSourceStatic name="PhaseSourceStatic" phase="0.01953125"/>
 					</ParamRange>
-					<ParamRange name="Height" T="DOUBLE" default="1050" value="1050">
-						<PhaseSourceStatic name="PhaseSourceStatic" phase="0.03204345703125"/>
+					<ParamRange name="Height" T="DOUBLE" default="480" value="480">
+						<PhaseSourceStatic name="PhaseSourceStatic" phase="0.0146484375"/>
 					</ParamRange>
 					<Param name="RScale" T="BOOL" default="1" value="1"/>
 					<Param name="GScale" T="BOOL" default="1" value="1"/>
@@ -2001,7 +2004,7 @@
 				</RenderPass>
 				<ChoosableMixer name="Blend"/>
 				<PrimarySource>
-					<VideoSource storage="0" name="VideoSource" width="1920" height="1050" type="SpoutVideoSource">
+					<VideoSource storage="0" name="VideoSource" width="640" height="480" type="SpoutVideoSource">
 						<SpoutInfo serverName="Spout Processing Sender"/>
 						<RenderPass name="RenderPassChain" type="RenderPassChain" uniqueId="RenderPassChain" baseType="RenderPassChain"/>
 					</VideoSource>
@@ -2075,11 +2078,11 @@
 			</ClipView>
 			<VideoTrack name="VideoTrack" manualDuration="0">
 				<Params name="Params">
-					<ParamRange name="Width" T="DOUBLE" default="1920" value="1920">
-						<PhaseSourceStatic name="PhaseSourceStatic" phase="0.05859375"/>
+					<ParamRange name="Width" T="DOUBLE" default="640" value="640">
+						<PhaseSourceStatic name="PhaseSourceStatic" phase="0.01953125"/>
 					</ParamRange>
-					<ParamRange name="Height" T="DOUBLE" default="1050" value="1050">
-						<PhaseSourceStatic name="PhaseSourceStatic" phase="0.03204345703125"/>
+					<ParamRange name="Height" T="DOUBLE" default="480" value="480">
+						<PhaseSourceStatic name="PhaseSourceStatic" phase="0.0146484375"/>
 					</ParamRange>
 					<Param name="RScale" T="BOOL" default="1" value="1"/>
 					<Param name="GScale" T="BOOL" default="1" value="1"/>
@@ -2093,7 +2096,7 @@
 				</RenderPass>
 				<ChoosableMixer name="Blend"/>
 				<PrimarySource>
-					<VideoSource storage="0" name="VideoSource" width="1920" height="1050" type="SpoutVideoSource">
+					<VideoSource storage="0" name="VideoSource" width="640" height="480" type="SpoutVideoSource">
 						<SpoutInfo serverName="Spout weather"/>
 						<RenderPass name="RenderPassChain" type="RenderPassChain" uniqueId="RenderPassChain" baseType="RenderPassChain"/>
 					</VideoSource>
@@ -2115,8 +2118,8 @@
 						<DurationSource name="DurationSource" defaultDuration="216.21600000000000819s"/>
 						<PhaseSourceTransportTimeline name="PhaseSourceTransportTimeline" phase="0.025424806674707291221" defaultMillisecondsDuration="216216" defaultBeatsDuration="512">
 							<Params name="Params">
-								<ParamRange name="Speed" T="DOUBLE" default="1" value="0.99999999999917388305">
-									<PhaseSourceStatic name="PhaseSourceStatic" phase="0.2499999999998795408"/>
+								<ParamRange name="Speed" T="DOUBLE" default="1" value="0.99999999999914801485">
+									<PhaseSourceStatic name="PhaseSourceStatic" phase="0.24999999999987565502"/>
 								</ParamRange>
 								<ParamChoice name="PlayModeAway" T="INT32" default="0" value="1" storeChoices="0"/>
 							</Params>
@@ -2133,8 +2136,8 @@
 			</ClipView>
 			<AudioTrack name="AudioTrack">
 				<Params name="Params">
-					<ParamRange name="Volume" T="DOUBLE" default="0" value="0.00013733465663081148838">
-						<PhaseSourceStatic name="PhaseSourceStatic" phase="0.50118723362727224391"/>
+					<ParamRange name="Volume" T="DOUBLE" default="0" value="0.00027466713668306648108">
+						<PhaseSourceStatic name="PhaseSourceStatic" phase="0.50119119583791393868"/>
 					</ParamRange>
 				</Params>
 				<AudioEffectChain name="AudioEffectChain"/>
@@ -2176,17 +2179,17 @@
 		</Clip>
 		<Clip name="Clip" uniqueId="1680168877528" layerIndex="1" columnIndex="6">
 			<PreloadData>
-				<VideoFile value="C:\Users\hidropc\Documents\develop\videos\VIDEO 7.mov"/>
+				<VideoFile value="C:\Users\hidropc\Documents\develop\hidropoeticas\videos\VIDEO 7_DXV 3 Normal Quality No Alpha.mov"/>
 			</PreloadData>
 			<Params name="Params">
-				<Param name="Name" T="STRING" default="VIDEO 7" value="VIDEO 7"/>
+				<Param name="Name" T="STRING" default="VIDEO 7_DXV 3 Normal Quality No Alpha" value="VIDEO 7_DXV 3 Normal Quality No Alpha"/>
 				<ParamChoice name="TransportType" default="0" value="0" storeChoices="0"/>
 			</Params>
 			<Transport name="Transport">
 				<Params name="Params">
 					<ParamRange name="Position" T="DOUBLE" default="0" value="4920.5840843915939331">
-						<DurationSource name="DurationSource" defaultDuration="35.480000000000003979s"/>
-						<PhaseSourceTransportTimeline name="PhaseSourceTransportTimeline" phase="0.13868613541126251221" defaultMillisecondsDuration="35480.000000000007276" defaultBeatsDuration="64">
+						<DurationSource name="DurationSource" defaultDuration="40.800000000000004263s"/>
+						<PhaseSourceTransportTimeline name="PhaseSourceTransportTimeline" phase="0.12060255108802926671" defaultMillisecondsDuration="40800" defaultBeatsDuration="64">
 							<Params name="Params">
 								<ParamRange name="Max Distance" altName="Distance" T="DOUBLE" default="2" value="1.999999999999999778">
 									<PhaseSourceStatic name="PhaseSourceStatic" phase="0.056369785794813970226"/>
@@ -2197,7 +2200,7 @@
 							</Params>
 							<Beats_double name="Beats_double" mode="0" numDetectedBeats="-1" numManualBeats="64" detectedTempo="-1" manualTempo="120" detected="0"/>
 						</PhaseSourceTransportTimeline>
-						<ValueRange name="minMax" min="0" max="35480"/>
+						<ValueRange name="minMax" min="0" max="40800"/>
 					</ParamRange>
 				</Params>
 			</Transport>
@@ -2226,7 +2229,7 @@
 				<PrimarySource>
 					<VideoSource name="VideoSource" width="1920" height="1080" type="VideoFormatReaderSource">
 						<RenderPass name="RenderPassChain" type="RenderPassChain" uniqueId="RenderPassChain" baseType="RenderPassChain"/>
-						<VideoFormatReaderSource fileName="C:\Users\hidropc\Documents\develop\videos\VIDEO 7.mov" LoadingThread="TTM_THREADED"/>
+						<VideoFormatReaderSource fileName="C:\Users\hidropc\Documents\develop\hidropoeticas\videos\VIDEO 7_DXV 3 Normal Quality No Alpha.mov" LoadingThread="TTM_THREADED"/>
 					</VideoSource>
 				</PrimarySource>
 			</VideoTrack>
@@ -2242,8 +2245,8 @@
 						<DurationSource name="DurationSource"/>
 						<PhaseSourceTransportTimeline name="PhaseSourceTransportTimeline" phase="0.005004340000024281275" defaultBeatsDuration="8">
 							<Params name="Params">
-								<ParamRange name="Speed" T="DOUBLE" default="1" value="0.99999999999930300199">
-									<PhaseSourceStatic name="PhaseSourceStatic" phase="0.2499999999998989697"/>
+								<ParamRange name="Speed" T="DOUBLE" default="1" value="0.99999999999927713379">
+									<PhaseSourceStatic name="PhaseSourceStatic" phase="0.24999999999989508392"/>
 								</ParamRange>
 							</Params>
 							<Beats_double name="Beats_double" mode="0" numDetectedBeats="-1" numManualBeats="8" detectedTempo="-1" manualTempo="120" detected="0"/>
@@ -2260,11 +2263,11 @@
 			</ClipView>
 			<VideoTrack name="VideoTrack" manualDuration="0">
 				<Params name="Params">
-					<ParamRange name="Width" T="DOUBLE" default="1920" value="1920">
-						<PhaseSourceStatic name="PhaseSourceStatic" phase="0.05859375"/>
+					<ParamRange name="Width" T="DOUBLE" default="640" value="640">
+						<PhaseSourceStatic name="PhaseSourceStatic" phase="0.01953125"/>
 					</ParamRange>
-					<ParamRange name="Height" T="DOUBLE" default="1050" value="1050">
-						<PhaseSourceStatic name="PhaseSourceStatic" phase="0.03204345703125"/>
+					<ParamRange name="Height" T="DOUBLE" default="480" value="480">
+						<PhaseSourceStatic name="PhaseSourceStatic" phase="0.0146484375"/>
 					</ParamRange>
 					<Param name="RScale" T="BOOL" default="1" value="1"/>
 					<Param name="GScale" T="BOOL" default="1" value="1"/>
@@ -2293,7 +2296,7 @@
 				</RenderPass>
 				<ChoosableMixer name="Blend"/>
 				<PrimarySource>
-					<VideoSource storage="0" name="VideoSource" width="1920" height="1050" type="SpoutVideoSource">
+					<VideoSource storage="0" name="VideoSource" width="640" height="480" type="SpoutVideoSource">
 						<SpoutInfo serverName="Spout Processing Sender"/>
 						<RenderPass name="RenderPassChain" type="RenderPassChain" uniqueId="RenderPassChain" baseType="RenderPassChain"/>
 					</VideoSource>
@@ -2367,11 +2370,11 @@
 			</ClipView>
 			<VideoTrack name="VideoTrack" manualDuration="0">
 				<Params name="Params">
-					<ParamRange name="Width" T="DOUBLE" default="1920" value="1920">
-						<PhaseSourceStatic name="PhaseSourceStatic" phase="0.05859375"/>
+					<ParamRange name="Width" T="DOUBLE" default="640" value="640">
+						<PhaseSourceStatic name="PhaseSourceStatic" phase="0.01953125"/>
 					</ParamRange>
-					<ParamRange name="Height" T="DOUBLE" default="1050" value="1050">
-						<PhaseSourceStatic name="PhaseSourceStatic" phase="0.03204345703125"/>
+					<ParamRange name="Height" T="DOUBLE" default="480" value="480">
+						<PhaseSourceStatic name="PhaseSourceStatic" phase="0.0146484375"/>
 					</ParamRange>
 					<Param name="RScale" T="BOOL" default="1" value="1"/>
 					<Param name="GScale" T="BOOL" default="1" value="1"/>
@@ -2385,7 +2388,7 @@
 				</RenderPass>
 				<ChoosableMixer name="Blend"/>
 				<PrimarySource>
-					<VideoSource storage="0" name="VideoSource" width="1920" height="1050" type="SpoutVideoSource">
+					<VideoSource storage="0" name="VideoSource" width="640" height="480" type="SpoutVideoSource">
 						<SpoutInfo serverName="Spout weather"/>
 						<RenderPass name="RenderPassChain" type="RenderPassChain" uniqueId="RenderPassChain" baseType="RenderPassChain"/>
 					</VideoSource>
@@ -2451,8 +2454,8 @@
 									<DurationSource name="DurationSource"/>
 									<PhaseSourceFFT name="PhaseSourceFFT" phase="0" canSetLinkedParam="0" linkId="/audioengine/externalfft">
 										<Params name="Params">
-											<ParamRange name="FrequencyRange" T="DOUBLE" default="0.5" value="0.55203595165754426599">
-												<PhaseSourceStatic name="PhaseSourceStatic" phase="0.55203595165397323363"/>
+											<ParamRange name="FrequencyRange" T="DOUBLE" default="0.5" value="0.55203595165904384423">
+												<PhaseSourceStatic name="PhaseSourceStatic" phase="0.55203595165754426599"/>
 												<ValueRange name="startStop" min="0.32020965335875983815" max="0.74015748031496064741"/>
 											</ParamRange>
 											<ParamRange name="Gain" T="DOUBLE" default="0" value="48">
@@ -2561,8 +2564,8 @@
 						<DurationSource name="DurationSource"/>
 						<PhaseSourceTransportTimeline name="PhaseSourceTransportTimeline" phase="0.83016459998743730164" defaultBeatsDuration="8">
 							<Params name="Params">
-								<ParamRange name="Speed" T="DOUBLE" default="1" value="0.99999999999932875916">
-									<PhaseSourceStatic name="PhaseSourceStatic" phase="0.24999999999990285549"/>
+								<ParamRange name="Speed" T="DOUBLE" default="1" value="0.99999999999930300199">
+									<PhaseSourceStatic name="PhaseSourceStatic" phase="0.2499999999998989697"/>
 								</ParamRange>
 							</Params>
 							<Beats_double name="Beats_double" mode="0" numDetectedBeats="-1" numManualBeats="8" detectedTempo="-1" manualTempo="120" detected="0"/>
@@ -2580,11 +2583,11 @@
 			</ClipView>
 			<VideoTrack name="VideoTrack" manualDuration="0">
 				<Params name="Params">
-					<ParamRange name="Width" T="DOUBLE" default="1920" value="1920">
-						<PhaseSourceStatic name="PhaseSourceStatic" phase="0.05859375"/>
+					<ParamRange name="Width" T="DOUBLE" default="640" value="640">
+						<PhaseSourceStatic name="PhaseSourceStatic" phase="0.01953125"/>
 					</ParamRange>
-					<ParamRange name="Height" T="DOUBLE" default="1050" value="1050">
-						<PhaseSourceStatic name="PhaseSourceStatic" phase="0.03204345703125"/>
+					<ParamRange name="Height" T="DOUBLE" default="480" value="480">
+						<PhaseSourceStatic name="PhaseSourceStatic" phase="0.0146484375"/>
 					</ParamRange>
 					<Param name="RScale" T="BOOL" default="1" value="1"/>
 					<Param name="GScale" T="BOOL" default="1" value="1"/>
@@ -2613,7 +2616,7 @@
 				</RenderPass>
 				<ChoosableMixer name="Blend"/>
 				<PrimarySource>
-					<VideoSource storage="0" name="VideoSource" width="1920" height="1050" type="SpoutVideoSource">
+					<VideoSource storage="0" name="VideoSource" width="640" height="480" type="SpoutVideoSource">
 						<SpoutInfo serverName="Spout Processing Sender"/>
 						<RenderPass name="RenderPassChain" type="RenderPassChain" uniqueId="RenderPassChain" baseType="RenderPassChain"/>
 					</VideoSource>
@@ -2751,8 +2754,8 @@
 						<DurationSource name="DurationSource"/>
 						<PhaseSourceTransportTimeline name="PhaseSourceTransportTimeline" phase="0.21014481999966974635" defaultBeatsDuration="8">
 							<Params name="Params">
-								<ParamRange name="Speed" T="DOUBLE" default="1" value="0.99999999999922550842">
-									<PhaseSourceStatic name="PhaseSourceStatic" phase="0.24999999999988731236"/>
+								<ParamRange name="Speed" T="DOUBLE" default="1" value="0.99999999999919964022">
+									<PhaseSourceStatic name="PhaseSourceStatic" phase="0.24999999999988342658"/>
 								</ParamRange>
 							</Params>
 							<Beats_double name="Beats_double" mode="0" numDetectedBeats="-1" numManualBeats="8" detectedTempo="-1" manualTempo="120" detected="0"/>

@@ -1,0 +1,1 @@
+SHUTDOWN /R /T 10 /C "Reiniciando hidropoeticas Theremin en 10 segundos"
