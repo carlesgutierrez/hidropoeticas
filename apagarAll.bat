@@ -1,1 +1,1 @@
-SHUTDOWN /S /T 10 "Apagando Hidropoeticas Theremin en 10 segundos"
+SHUTDOWN /p /f
