@@ -2,7 +2,7 @@
   "/fftPosX": {
     "min": 0,
     "max": 960,
-    "value": 0
+    "value": 19.19999885559082
   },
   "/sizeCircle": {
     "min": 10,
@@ -17,7 +17,7 @@
   "/thresholdMinimInteractionFFT": {
     "min": 9.99999993922529E-9,
     "max": 0.10000000149011612,
-    "value": 0.05500001087784767
+    "value": 0.013000008650124073
   },
   "/typeOSCMode": {
     "min": 1,
@@ -32,12 +32,12 @@
   "/bandsThreshold": {
     "min": 0,
     "max": 512,
-    "value": 194.55999755859375
+    "value": 158.72000122070312
   },
   "/rectW": {
     "min": 1,
     "max": 10,
-    "value": 3.9699997901916504
+    "value": 4.149999618530273
   },
   "/bSumMode": {"value": 0},
   "/gapX": {
@@ -48,7 +48,7 @@
   "/scaleRectH": {
     "min": 1,
     "max": 100,
-    "value": 3
+    "value": 42.57999801635742
   },
   "/lineWidth": {
     "min": 1,

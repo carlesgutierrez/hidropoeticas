@@ -369,7 +369,7 @@ public int findIdInteraction(int _maxFId) {
 //----------------------------------------------------
 public void updatePctInteraction(int _maxFId) {
 
-  float auxFreq = int(map(_maxFId, 0, bandsThreshold, 0, 1920));
+  float auxFreq = int(map(_maxFId, 0, bandsThreshold, 0, width));
   //idVid = findIdInteraction(_maxFId);
   pctAux = map(auxFreq%sizeWPerVideo, 0, sizeWPerVideo, 0, 1);
   //if(pctAux < 1 && pctLerp)
@@ -434,10 +434,10 @@ public void drawMainRectArea() {
 public void sendOSCAbletonFreqData(int _idBandMaxFr) {
   OscMessage myMessage = new OscMessage("/maxFreq");
 
-  if (_idBandMaxFr >0 && _idBandMaxFr < bands) {
+  if (_idBandMaxFr >0 && _idBandMaxFr <= bands) {
 
-    float auxFreqAmplitude = map(getMaxValueFFT(_idBandMaxFr), 0.0, 0.2, 0.0, 1.0);//Map into [0, 100]
-    float auxFreq = (map(_idBandMaxFr, 0, bandsThreshold, 0, 1));//Map into width of FULLHD [0, 1920]
+    float auxFreqAmplitude = map(getMaxValueFFT(_idBandMaxFr), 0.0, 0.2, 0.0, 1.0);//Map into [0, 1]
+    float auxFreq = (map(_idBandMaxFr, 0, bandsThreshold, 0, 1));//Map into width of FULLHD [0, 1]
     //myMessage.add(auxFreq);
     myMessage.add(auxFreq);
 
@@ -464,7 +464,7 @@ public void sendOSCArenaVideoData(int _idBandMaxFr) {
    
    */
 
-  if (_idBandMaxFr >0 && _idBandMaxFr < bands) {
+  if (_idBandMaxFr >0 && _idBandMaxFr <= bands) {
 
     //update Id Video and pct
     idVid = findIdInteraction(_idBandMaxFr);
