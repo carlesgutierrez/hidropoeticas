@@ -1,4 +1,4 @@
-/** //<>// //<>// //<>// //<>// //<>//
+/** //<>// //<>// //<>// //<>//
  Hidropoeticas
  by Carles Gutierrez
  Toolset createt for Santiago Morilla.
@@ -11,9 +11,6 @@ import spout.*;
 import controlP5.*;
 import oscP5.*;
 import netP5.*;
-import themidibus.*; //Import the library
-
-MidiBus myBus; // The MidiBus
 
 //interactive videos Controler
 int numVideoCtrl = 7;
@@ -98,7 +95,7 @@ public float thresholdMinimInteractionFFT = 0.0003;
 public boolean bSumMode = false;
 public int bandsThreshold = 51;//300;
 
-public boolean bCircleDrawer = true; //<>//
+public boolean bCircleDrawer = true;
 public int sizeCircle = 100;
 //Colors
 public int cBackground = color(0, 0, 0);
@@ -265,22 +262,11 @@ public void createCUSTOMGUI(int _x, int _y) {
  
 }
 
-//--------------------------------------
 public void setupDimensionsSoundBar() {
   scaleX = width/bands;
   println("scaleX = "+scaleX);
 }
 
-//--------------------------------------------------------
-public void startAbletonMIDI(){
-  int channel = 0;
-  int number = 0;
-  int value = 1;
-  myBus.sendControllerChange(channel, number, value); // Send a controllerChange
-  println("start Ableton with MIDI at channel= "+ channel + " number "+ number + " value = "+ value);
-}
-
-//--------------------------------------
 public void setup() {
 
   size(1920, 1080, P3D); //640, 360
@@ -329,21 +315,7 @@ public void setup() {
   //OSC Ableton
   oscP5Ableton = new OscP5(this, 8001);
   myRemoteLocationAbleton = new NetAddress("127.0.0.1", 8000); // 192.168.1.104 //172.18.144.1
-  
-  //Midi Ableton
-  MidiBus.list(); // List all available Midi devices on STDOUT. This will show each device's index and name.
-  myBus = new MidiBus(this, -1, "abletonPort");
-  
-  startAbletonMIDI();
-  
 }
-
-//--------------------------------------
-//KeyPressed events
-void keyPressed() {
-  startAbletonMIDI();
-}
-
 
 //----------------------------------------------------
 public void draw() {
@@ -397,7 +369,7 @@ public int findIdInteraction(int _maxFId) {
 //----------------------------------------------------
 public void updatePctInteraction(int _maxFId) {
 
-  float auxFreq = int(map(_maxFId, 0, bandsThreshold, 0, width));
+  float auxFreq = int(map(_maxFId, 0, bandsThreshold, 0, 1920));
   //idVid = findIdInteraction(_maxFId);
   pctAux = map(auxFreq%sizeWPerVideo, 0, sizeWPerVideo, 0, 1);
   //if(pctAux < 1 && pctLerp)
@@ -462,25 +434,15 @@ public void drawMainRectArea() {
 public void sendOSCAbletonFreqData(int _idBandMaxFr) {
   OscMessage myMessage = new OscMessage("/maxFreq");
 
-  if (_idBandMaxFr >0 && _idBandMaxFr <= bands) {
+  if (_idBandMaxFr >0 && _idBandMaxFr < bands) {
 
-    float auxFreqAmplitude = map(getMaxValueFFT(_idBandMaxFr), 0.0, 0.2, 0.0, 1.0);//Map into [0, 1]
-    float auxFreq = (map(_idBandMaxFr, 0, bandsThreshold, 0, 1));//Map into width of FULLHD [0, 1]
-    
-    if(false){
+    float auxFreqAmplitude = map(getMaxValueFFT(_idBandMaxFr), 0.0, 0.2, 0.0, 1.0);//Map into [0, 100]
+    float auxFreq = (map(_idBandMaxFr, 0, bandsThreshold, 0, 1));//Map into width of FULLHD [0, 1920]
     //myMessage.add(auxFreq);
     myMessage.add(auxFreq);
 
     /* send the message */
     oscP5Ableton.send(myMessage, myRemoteLocationAbleton);
-    }else{
-      //MIDI 
-      int auxFreqByMidi = round(map(_idBandMaxFr, 0, bandsThreshold, 0, 100));//Map into width of FULLHD [0, 100]
-      int channel = 0;
-      int number = 1;
-      myBus.sendControllerChange(channel, number, auxFreqByMidi); // Send a controllerChange
-      //println("send auxFreqByMidi= "+ auxFreqByMidi);
-    }
   }
   
 }
@@ -502,7 +464,7 @@ public void sendOSCArenaVideoData(int _idBandMaxFr) {
    
    */
 
-  if (_idBandMaxFr >0 && _idBandMaxFr <= bands) {
+  if (_idBandMaxFr >0 && _idBandMaxFr < bands) {
 
     //update Id Video and pct
     idVid = findIdInteraction(_idBandMaxFr);
@@ -662,8 +624,6 @@ void b3() {
 void b4() {
   cp5.loadProperties(("default.json"));
 }
-
-
 
 //--------------------------------------------
 /* incoming osc message are forwarded to the oscEvent method. */
