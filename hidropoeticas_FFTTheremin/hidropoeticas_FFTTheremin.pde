@@ -21,7 +21,7 @@ int numVideoCtrl = 7;
 // Declare the sound source and FFT analyzer variables
 AudioIn in;
 //ID Audio IN inputs
-int idAudioDevice = 14; // 5 is Microphone (Realtek Audio) with 2 inputs
+int idAudioDevice = 12; // 12 is USB Audio CODEC with 2 inputs
 //8 is U-phoria connected with 2 inputs.
 int idAudioInput = 0;
 /* Later at setup...
@@ -80,6 +80,7 @@ int bands = 1024;//512;//128;
 // is rendered), decrease the factor down towards 0.0 to have the visualisation update
 // more slowly, which is easier on the eye.
 float smoothingFactor = 0.2;
+float rtFreqAmplitude = 0; 
 
 // Create a vector to store the smoothed spectrum data in
 float[] sum = new float[bands];
@@ -309,10 +310,12 @@ public void setup() {
   in = new AudioIn(this, idAudioInput);
   // start the Audio Input
   in.start();
+  print("Audio Started");
 
   // Create the FFT analyzer and connect the playing soundfile to it.
   fft = new FFT(this, bands);
   fft.input(in);
+  print("Audio Started");
 
 
   //SPOUT
@@ -475,7 +478,7 @@ public void sendOSCAbletonFreqData(int _idBandMaxFr) {
     oscP5Ableton.send(myMessage, myRemoteLocationAbleton);
     }else{
       //MIDI 
-      int auxFreqByMidi = round(map(_idBandMaxFr, 0, bandsThreshold, 0, 100));//Map into width of FULLHD [0, 100]
+      int auxFreqByMidi = round(map(_idBandMaxFr, 0, bandsThreshold, 100, 20));//Map into width of FULLHD [0, 100]
       int channel = 0;
       int number = 1;
       myBus.sendControllerChange(channel, number, auxFreqByMidi); // Send a controllerChange
@@ -535,8 +538,9 @@ public void sendOSCArenaVideoData(int _idBandMaxFr) {
   
     if (_idBandMaxFr >0 && _idBandMaxFr < bands) {
   
-      float auxFreqAmplitude = map(getMaxValueFFT(_idBandMaxFr), 0, 0.2, 0, 1);// until 0.5 it's ok
-      myMessageVideosAlpha.add(auxFreqAmplitude);
+      float rawFreq = map(getMaxValueFFT(_idBandMaxFr), 0, 0.2, 0, 1);// until 0.5 it's ok
+      rtFreqAmplitude = lerp(rtFreqAmplitude, rawFreq, 0.05);
+      myMessageVideosAlpha.add(rtFreqAmplitude);
   
       /* send the message */
       oscP5Arena.send(myMessageVideosAlpha, myRemoteLocationArena);

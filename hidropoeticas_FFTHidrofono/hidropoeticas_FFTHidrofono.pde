@@ -18,7 +18,7 @@ int numVideoCtrl = 7;
 // Declare the sound source and FFT analyzer variables
 AudioIn in;
 //ID Audio IN inputs
-int idAudioDevice = 15; // 5 is Microphone (Realtek Audio) with 2 inputs
+int idAudioDevice = 12; // 5 is Microphone (Realtek Audio) with 2 inputs
 //8 is U-phoria connected with 2 inputs.
 int idAudioInput = 0;
 /* Later at setup...
@@ -303,11 +303,11 @@ public void setup() {
   s = new Sound(this);
 
   s.inputDevice(idAudioDevice);//
-  in = new AudioIn(this, idAudioInput);
+//  in = new AudioIn(this, idAudioInput);
 
   // start the Audio Input
-  in.start();
-  in.play(); //Internal Sound route path Joaku
+//  in.start();
+//  in.play(); //Internal Sound route path Joaku
   // Create the FFT analyzer and connect the playing soundfile to it.
   fft = new FFT(this, bands);
   //fft.input(in);
