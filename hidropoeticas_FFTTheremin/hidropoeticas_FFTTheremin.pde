@@ -18,7 +18,7 @@ MidiBus myBus; // The MidiBus
 //interactive videos Controler
 int numVideoCtrl = 7;
 
-Boolean bMidiActive = false;
+Boolean bMidiActive = true;
 
 // Declare the sound source and FFT analyzer variables
 AudioIn in;
@@ -291,6 +291,18 @@ public void startAbletonMIDI(){
   println("start Ableton with MIDI at channel= "+ channel + " number "+ number + " value = "+ value);
 }
 
+//--------------------------------------------------------
+public void startArenaOSC(){
+    if (bOSCActive) {
+      //OSC id Vídeo
+      String pathOSCVid_Id = "/composition/columns/"+(idVid+1)+"/connect";
+      //println(pathOSCVid);
+      OscMessage myMessage_id = new OscMessage(pathOSCVid_Id);  // RECOVERY
+      myMessage_id.add(1); //"send 0 or 1"// RECOVERY
+      oscP5Arena.send(myMessage_id, myRemoteLocationArena);// RECOVERY
+    }
+}
+
 
 //--------------------------------------
 public void setup() {
@@ -343,6 +355,8 @@ public void setup() {
   //OSC Ableton
   oscP5Ableton = new OscP5(this, 8001);
   myRemoteLocationAbleton = new NetAddress("127.0.0.1", 8000); // 192.168.1.104 //172.18.144.1
+  
+  startArenaOSC();
   
   if(bMidiActive){
     //Midi Ableton
