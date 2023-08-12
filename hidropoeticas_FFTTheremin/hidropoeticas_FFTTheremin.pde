@@ -23,7 +23,7 @@ Boolean bMidiActive = true;
 // Declare the sound source and FFT analyzer variables
 AudioIn in;
 //ID Audio IN inputs
-int idAudioDevice = 12; // 12 is USB Audio CODEC with 2 inputs
+int idAudioDevice = 14; // Antes en el numero 12 ( USB Audio CODEC with 2 inputs )
 //8 is U-phoria connected with 2 inputs.
 int idAudioInput = 0;
 /* Later at setup...
@@ -296,7 +296,7 @@ public void startArenaOSC(){
     if (bOSCActive) {
       //OSC id Vídeo
       String pathOSCVid_Id = "/composition/columns/"+(idVid+1)+"/connect";
-      //println(pathOSCVid);
+      println("******** startArenaOSC ********** ->" + pathOSCVid_Id);
       OscMessage myMessage_id = new OscMessage(pathOSCVid_Id);  // RECOVERY
       myMessage_id.add(1); //"send 0 or 1"// RECOVERY
       oscP5Arena.send(myMessage_id, myRemoteLocationArena);// RECOVERY
