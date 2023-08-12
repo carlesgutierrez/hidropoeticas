@@ -11,19 +11,14 @@ import spout.*;
 import controlP5.*;
 import oscP5.*;
 import netP5.*;
-import themidibus.*; //Import the library
-
-MidiBus myBus; // The MidiBus
 
 //interactive videos Controler
 int numVideoCtrl = 7;
 
-Boolean bMidiActive = false;
-
 // Declare the sound source and FFT analyzer variables
 AudioIn in;
 //ID Audio IN inputs
-int idAudioDevice = 12; // 12 is USB Audio CODEC with 2 inputs
+int idAudioDevice = 7;//14; // 5 is Microphone (Realtek Audio) with 2 inputs
 //8 is U-phoria connected with 2 inputs.
 int idAudioInput = 0;
 /* Later at setup...
@@ -82,6 +77,7 @@ int bands = 1024;//512;//128;
 // is rendered), decrease the factor down towards 0.0 to have the visualisation update
 // more slowly, which is easier on the eye.
 float smoothingFactor = 0.2;
+
 float rtFreqAmplitude = 0; 
 
 // Create a vector to store the smoothed spectrum data in
@@ -99,8 +95,7 @@ public int rectW = 3;
 public int fftPosX, fftPosY = 0;
 public float thresholdMinimInteractionFFT = 0.0003;
 public boolean bSumMode = false;
-public int bandsMaxThreshold = 51;//300;
-public int bandsMinThreshold = 0;//300;
+public int bandsThreshold = 51;//300;
 
 public boolean bCircleDrawer = true; //<>//
 public int sizeCircle = 100;
@@ -214,7 +209,7 @@ public void createCUSTOMGUI(int _x, int _y) {
   cp5.addSlider("fftPosX")
     .setPosition(_x, _y+190)
     .setSize(100, 10)
-    .setRange(-width*.5, width*.5)
+    .setRange(0, width*.5)
     ;
 
   // add a vertical slider
@@ -224,19 +219,12 @@ public void createCUSTOMGUI(int _x, int _y) {
     .setRange(0, -height*.9)
     ;
 
-  // add a H slider
-  cp5.addSlider("bandsMinThreshold")
+  // add a vertical slider
+  cp5.addSlider("bandsThreshold")
     .setPosition(_x, _y+210)
-    .setSize(100, 20)
-    .setRange(0, bands/2)
-    ;
-    
-  // add a H slider
-  cp5.addSlider("bandsMaxThreshold")
-    .setPosition(_x + 300, _y+210)
-    .setSize(100, 20)
+    .setSize(100, 10)
     .setRange(0, bands)
-  ;
+    ;
 
   cp5.addButton("b3", 0, 200, 350, 80, 12).setCaptionLabel("save default");
   cp5.addButton("b4", 0, 281, 350, 80, 12).setCaptionLabel("load default").setColorBackground(color(0, 100, 50));
@@ -276,23 +264,11 @@ public void createCUSTOMGUI(int _x, int _y) {
  
 }
 
-//--------------------------------------
 public void setupDimensionsSoundBar() {
   scaleX = width/bands;
   println("scaleX = "+scaleX);
 }
 
-//--------------------------------------------------------
-public void startAbletonMIDI(){
-  int channel = 0;
-  int number = 0;
-  int value = 1;
-  myBus.sendControllerChange(channel, number, value); // Send a controllerChange
-  println("start Ableton with MIDI at channel= "+ channel + " number "+ number + " value = "+ value);
-}
-
-
-//--------------------------------------
 public void setup() {
 
   size(1920, 1080, P3D); //640, 360
@@ -321,12 +297,10 @@ public void setup() {
   in = new AudioIn(this, idAudioInput);
   // start the Audio Input
   in.start();
-  print("Audio Started");
 
   // Create the FFT analyzer and connect the playing soundfile to it.
   fft = new FFT(this, bands);
   fft.input(in);
-  print("Audio Started");
 
 
   //SPOUT
@@ -344,21 +318,9 @@ public void setup() {
   oscP5Ableton = new OscP5(this, 8001);
   myRemoteLocationAbleton = new NetAddress("127.0.0.1", 8000); // 192.168.1.104 //172.18.144.1
   
-  if(bMidiActive){
-    //Midi Ableton
-    MidiBus.list(); // List all available Midi devices on STDOUT. This will show each device's index and name.
-    myBus = new MidiBus(this, -1, "abletonPort");
-    
-    startAbletonMIDI();
-  }  
+  //try this at the right moment and cross fingers
+  sendPlayMasterAbleton();
 }
-
-//--------------------------------------
-//KeyPressed events
-void keyPressed() {
-  startAbletonMIDI();
-}
-
 
 //----------------------------------------------------
 public void draw() {
@@ -398,7 +360,7 @@ public void draw() {
    */
 
   //draw Calcs
-  float auxFreq = int(map(maxFId, bandsMinThreshold, bandsMaxThreshold, 0, 1920));//Map into FULLHD width
+  float auxFreq = int(map(maxFId, 0, bandsThreshold, 0, 1920));//Map into FULLHD width
   float auxFreqAmplitude = int(map(getMaxValueFFT(maxFId), 0, 0.2, 0, height));
   text("Dominant FREQ ID Band is "+ maxFId+ " -> [0, 1920] ->"+auxFreq, 15, 50);
   text("Dominant FREQ is "+ nf(getMaxValueFFT(maxFId), 1, 8)+ " -> [0, 100] -> "+auxFreqAmplitude, 15, 70);
@@ -406,13 +368,13 @@ public void draw() {
 
 //----------------------------------------------------
 public int findIdInteraction(int _maxFId) {
-  return int(map(_maxFId, bandsMinThreshold, bandsMaxThreshold, 0, numVideoCtrl));
+  return int(map(_maxFId, 0, bandsThreshold, 0, numVideoCtrl));
 }
 
 //----------------------------------------------------
 public void updatePctInteraction(int _maxFId) {
 
-  float auxFreq = int(map(_maxFId, bandsMinThreshold, bandsMaxThreshold, 0, width));
+  float auxFreq = int(map(_maxFId, 0, bandsThreshold, 0, width));
   //idVid = findIdInteraction(_maxFId);
   pctAux = map(auxFreq%sizeWPerVideo, 0, sizeWPerVideo, 0, 1);
   //if(pctAux < 1 && pctLerp)
@@ -479,25 +441,25 @@ public void sendOSCAbletonFreqData(int _idBandMaxFr) {
 
   if (_idBandMaxFr >0 && _idBandMaxFr <= bands) {
 
-    float auxFreqAmplitude = map(getMaxValueFFT(_idBandMaxFr), 0.0, 0.2, 0.0, 1.0);//Map into [0, 1]
-    float auxFreq = (map(_idBandMaxFr, bandsMinThreshold, bandsMaxThreshold, 0, 1));//Map into width of FULLHD [0, 1]
-    
-    if(!bMidiActive){
-    //myMessage.add(auxFreq);
+    //for ableton send only detected freq
+    float auxFreq = (map(_idBandMaxFr, 0, bandsThreshold, 0, 1));//Map into width of FULLHD [0, 1]
     myMessage.add(auxFreq);
 
     /* send the message */
     oscP5Ableton.send(myMessage, myRemoteLocationAbleton);
-    }else{
-      //MIDI 
-      int auxFreqByMidi = round(map(_idBandMaxFr, bandsMinThreshold, bandsMaxThreshold, 100, 20));//Map into width of FULLHD [0, 100]
-      int channel = 0;
-      int number = 1;
-      myBus.sendControllerChange(channel, number, auxFreqByMidi); // Send a controllerChange
-      //println("send auxFreqByMidi= "+ auxFreqByMidi);
-    }
   }
   
+}
+
+//----------------------------------------------------
+public void sendPlayMasterAbleton() {
+  OscMessage myMessage = new OscMessage("/playMaster");
+
+  int auxPlay = 1;
+  myMessage.add(auxPlay);
+
+  /* send the message */
+   oscP5Ableton.send(myMessage, myRemoteLocationAbleton); 
 }
 
 //----------------------------------------------------
@@ -550,8 +512,16 @@ public void sendOSCArenaVideoData(int _idBandMaxFr) {
   
     if (_idBandMaxFr >0 && _idBandMaxFr < bands) {
   
+      Boolean bFilterNyapaTheremin = false;
+      int maxFId = updateMAXFFTValue();//float
       float rawFreq = map(getMaxValueFFT(_idBandMaxFr), 0, 0.2, 0, 1);// until 0.5 it's ok
-      rtFreqAmplitude = lerp(rtFreqAmplitude, rawFreq, 0.05);
+      
+      if(bFilterNyapaTheremin && maxFId < 20){
+        rtFreqAmplitude = lerp(rtFreqAmplitude, 0, 0.05);
+      }else {
+        rtFreqAmplitude = lerp(rtFreqAmplitude, rawFreq, 0.05);
+      }
+      
       myMessageVideosAlpha.add(rtFreqAmplitude);
   
       /* send the message */
@@ -584,7 +554,7 @@ public void drawCustomFFTMode(int _mode, int _maxFreqIdBand) {
   }
 
   for (int i = 0; i < bands; i++) {
-    if (i>bandsMinThreshold && i<bandsMaxThreshold) {//bands/2
+    if (i<bandsThreshold) {//bands/2
       float valueFFT = 0;
       if (bSumMode) {
         // Smooth the FFT spectrum data by smoothing factor
@@ -650,7 +620,7 @@ public int updateMAXFFTValue() {
   float maxValue = Float.MIN_VALUE;
   int maxIndex = -1;
   for (int i = 0; i < bands; i++) {
-    if (i>bandsMinThreshold && i<bandsMaxThreshold) {
+    if (i<bandsThreshold) {
       if (fft.spectrum[i] > maxValue)
       {
         maxValue = fft.spectrum[i];
@@ -678,8 +648,6 @@ void b3() {
 void b4() {
   cp5.loadProperties(("default.json"));
 }
-
-
 
 //--------------------------------------------
 /* incoming osc message are forwarded to the oscEvent method. */
