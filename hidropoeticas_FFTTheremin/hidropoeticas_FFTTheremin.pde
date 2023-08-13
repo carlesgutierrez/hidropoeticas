@@ -81,7 +81,8 @@ int bands = 1024;//512;//128;
 // A smoothing factor of 1.0 means no smoothing (only the data from the newest analysis
 // is rendered), decrease the factor down towards 0.0 to have the visualisation update
 // more slowly, which is easier on the eye.
-float smoothingFactor = 0.2;
+float smoothingFactor = 0.25;
+float maxFreqFFTValue = 0.25;
 float rtFreqAmplitude = 0; 
 
 // Create a vector to store the smoothed spectrum data in
@@ -190,7 +191,7 @@ public void createCUSTOMGUI(int _x, int _y) {
   cp5.addSlider("thresholdMinimInteractionFFT")
     .setPosition(_x + 400, _y+80)
     .setSize(100, 10)
-    .setRange(0.00000001, 0.1)
+    .setRange(0.00000001, maxFreqFFTValue)
     ;
 
 
@@ -413,7 +414,7 @@ public void draw() {
 
   //draw Calcs
   float auxFreq = int(map(maxFId, bandsMinThreshold, bandsMaxThreshold, 0, 1920));//Map into FULLHD width
-  float auxFreqAmplitude = int(map(getMaxValueFFT(maxFId), 0, 0.2, 0, height));
+  float auxFreqAmplitude = int(map(getMaxValueFFT(maxFId), 0, maxFreqFFTValue, 0, height));
   text("Dominant FREQ ID Band is "+ maxFId+ " -> [0, 1920] ->"+auxFreq, 15, 50);
   text("Dominant FREQ is "+ nf(getMaxValueFFT(maxFId), 1, 8)+ " -> [0, 100] -> "+auxFreqAmplitude, 15, 70);
 }
@@ -493,7 +494,7 @@ public void sendOSCAbletonFreqData(int _idBandMaxFr) {
 
   if (_idBandMaxFr >0 && _idBandMaxFr <= bands) {
 
-    float auxFreqAmplitude = map(getMaxValueFFT(_idBandMaxFr), 0.0, 0.2, 0.0, 1.0);//Map into [0, 1]
+    float auxFreqAmplitude = map(getMaxValueFFT(_idBandMaxFr), 0.0, maxFreqFFTValue, 0.0, 1.0);//Map into [0, 1]
     float auxFreq = (map(_idBandMaxFr, bandsMinThreshold, bandsMaxThreshold, 0, 1));//Map into width of FULLHD [0, 1]
     
     if(!bMidiActive){
@@ -564,7 +565,7 @@ public void sendOSCArenaVideoData(int _idBandMaxFr) {
   
     if (_idBandMaxFr >0 && _idBandMaxFr < bands) {
   
-      float rawFreq = map(getMaxValueFFT(_idBandMaxFr), 0, 0.2, 0, 1);// until 0.5 it's ok
+      float rawFreq = map(getMaxValueFFT(_idBandMaxFr), 0, maxFreqFFTValue, 0, 1);// until 0.5 it's ok
       rtFreqAmplitude = lerp(rtFreqAmplitude, rawFreq, 0.05);
       myMessageVideosAlpha.add(rtFreqAmplitude);
   

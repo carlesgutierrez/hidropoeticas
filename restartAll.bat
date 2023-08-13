@@ -1,1 +1,1 @@
-SHUTDOWN /R /T 10 /C "Reiniciando hidropoeticas Theremin en 10 segundos"
+SHUTDOWN /R /T 10 /C "Reiniciando hidropoeticas Theremin en 15 segundos. Please antes Cierra Ableton y no guardes los ultimos valores"
